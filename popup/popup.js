@@ -1,10 +1,13 @@
 function handleResponse(response) {
     console.log(response);
-    if (response === 'search') {
-        chrome.scripting.executeScript({
-            'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
-        });
-    }
+    chrome.tabs.getCurrent((tab) => {
+        if (response === 'search') {
+            chrome.scripting.executeScript({
+                'target': { 'tabId': getTabId() },
+                'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
+            });
+        }
+    })
 }
 function sendData() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
