@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Document</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+            :root {
+                --text-color: rgb(70, 121, 151);
+                --text-hover-color: rgb(234, 251, 255);
+
+                --secondary-background-color: rgb(223, 237, 255);
+
+                --active-background-color: rgb(0, 174, 255);
+                --hover-background-color: rgb(98, 204, 253);
+            }
+
+            body {
+                margin: 0;
+                margin-top: 1em;
+
+                font-family: "Roboto", sans-serif;
+            }
+        </style>
+        <link
+            rel="stylesheet"
+            href="header.css"
+        />
+        <link
+            rel="stylesheet"
+            href="table.css"
+        />
+    </head>
+
+    <body>
+        <header>
+            <nav id="year-selector"></nav>
+            <section id="month-selector"></section>
+        </header>
+        <main>
+            <h1>
+                Total:
+                <span id="table-total">2450</span>€
+            </h1>
+            <table id="content-table">
+                <thead>
+                    <tr>
+                        <th>SubTotal</th>
+                        <th>Tipo</th>
+                        <th>Exame</th>
+                        <th>Nº</th>
+                        <th>SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3"><span>5</span><br /><span>1450</span>€</td>
+                        <td rowspan="3">CT</td>
+                        <td>ATUM!</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td>Cerebro</td>
+                        <td>2</td>
+                        <td>50€</td>
+                    </tr>
+                    <tr>
+                        <td>Joelho</td>
+                        <td>4</td>
+                        <td>25€</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="1"><span>2</span><br /><span>112350</span>€</td>
+                        <td rowspan="1">RX</td>
+                        <td>Medula</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="6"><span>1</span><br /><span>1450</span>€</td>
+                        <td rowspan="6">MRI</td>
+                        <td>ATUM!</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td>Cerebro</td>
+                        <td>2</td>
+                        <td>50€</td>
+                    </tr>
+                    <tr>
+                        <td>Joelho</td>
+                        <td>4</td>
+                        <td>25€</td>
+                    </tr>
+                    <tr>
+                        <td>Mão</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td>Tornozelo</td>
+                        <td>2</td>
+                        <td>50€</td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet, temporibus. Corporis rem obcaecati perferendis ducimus blanditiis hic quos ratione enim? Sunt odio error ipsum voluptate dolore provident corporis, harum qui.</td>
+                        <td>4</td>
+                        <td>25€</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="6"><span>7</span><br /><span>780</span>€</td>
+                        <td rowspan="6">DM</td>
+                        <td>Medula</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td>Cerebro</td>
+                        <td>2</td>
+                        <td>50€</td>
+                    </tr>
+                    <tr>
+                        <td>Joelho</td>
+                        <td>4</td>
+                        <td>25€</td>
+                    </tr>
+                    <tr>
+                        <td>Mão</td>
+                        <td>1</td>
+                        <td>30€</td>
+                    </tr>
+                    <tr>
+                        <td>Tornozelo</td>
+                        <td>2</td>
+                        <td>50€</td>
+                    </tr>
+                    <tr>
+                        <td>Joelho</td>
+                        <td>4</td>
+                        <td>25€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <script src="popup.js"></script>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Tuna Connect",
+    "version": "1.0.0",
+    "description": "Connect to atum!",
+    "permissions": [
+        "scripting",
+        "activeTab"
+    ],
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.atumm.pt/*",
+                "https://*.google.com/*"
+            ],
+            "js": [
+                "contentScript.js"
+            ]
+        }
+    ]
+}

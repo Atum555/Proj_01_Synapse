@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "exams": [
+            "TAC CEREBRAL/CRANIO",
+            "TAC COLUNA CERVICAL"
+        ],
+        "seguro": "CARTÃO CLIENTE TROFA SAUDE",
+        "exam_Type": "CT",
+        "date": "21/12/2023"
+    }
+]
