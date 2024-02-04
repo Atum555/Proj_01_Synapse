@@ -40,21 +40,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
 
         // Search
-        sendResponse('search');
-        doMySearch();
-        return;
+        __doPostBack('ctl00$MainContent$cmdRptSearch','');
+        return
     }
 });
-
-(() => {
-    const myJavaScript = 
-        `function doMySearch() {
-            __doPostBack('ctl00$MainContent$cmdRptSearch', '');
-        }`;    //You need to put your JS here. 
-    const scriptTag = document.createElement("script");
-    scriptTag.innerHTML = myJavaScript;
-    document.head.appendChild(scriptTag);
-})();
 
 /* // GET DATA
 rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;

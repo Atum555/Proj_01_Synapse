@@ -6,10 +6,22 @@
     "permissions": [
         "activeTab","scripting"
     ],
+    "externally_connectable": {
+        "matches": ["https://cwm.trofasaude.com/*"]
+    },
     "action": {
         "default_popup": "popup/popup.html"
     },
     "content_scripts": [
+        {
+            "world": "MAIN",
+            "matches": [
+                "https://cwm.trofasaude.com/*"
+            ],
+            "js": [
+                "innerScript.js"
+            ]
+        },
         {
             "matches": [
                 "https://cwm.trofasaude.com/*"

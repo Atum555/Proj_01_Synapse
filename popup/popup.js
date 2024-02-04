@@ -1,5 +1,17 @@
 function handleResponse(response) {
     console.log(response);
+/*     if (response === 'search') {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const activeTab = tabs[0];
+            chrome.scripting.executeScript({
+                'target': { 'tabId': activeTab.id },
+                'func': () => {
+                    console.log(atum);
+                    __doPostBack('ctl00$MainContent$cmdRptSearch','');
+                }
+            });
+        });
+    } */
 }
 
 function sendData() {
