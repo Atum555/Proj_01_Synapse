@@ -6,7 +6,7 @@ function handleResponse(response) {
     const warningElem = document.getElementById('content-warning');
 
     // No data
-    if ( !rData || rData?.length == 0) {
+    if (!rData) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';
