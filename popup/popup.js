@@ -1,3 +1,17 @@
+function handleResponse() {
+    const totalElem = document.getElementById('table-total');
+    const tableElem = document.getElementById('content-table');
+    const warningElem = document.getElementById('content-warning');
+    if (data.length === 0) {
+        totalElem.innerText = '0000';
+        tableElem.style.visibility = 'hidden';
+        warningElem.style.visibility = '';
+        return;
+    }
+    tableElem.style.visibility = '';
+    warningElem.style.visibility = 'hidden';
+}
+
 function sendRequest() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
@@ -41,9 +55,6 @@ function sendRequest() {
         const activeTab = tabs[0];
         chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);
     });
-}
-function handleResponse(response) {
-    console.log(response);
 }
 setInterval(sendRequest, 250);
 
