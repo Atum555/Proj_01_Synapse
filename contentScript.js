@@ -40,44 +40,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
 
         // Search
-        __doPostBack('ctl00$MainContent$cmdRptSearch','');
-        return
+        window.postMessage({
+            'direction': 'from-content-script',
+            'message': 'search'
+        });
     }
 });
-
-/* // GET DATA
-rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
-
-data = [];
-
-for (let i = 0; i < rows.length; i++) {
-    dataPoint = {};
-    
-    // Index
-    dataPoint.i = i;
-
-    // Exams
-    dataPoint.exams = element.children[2].querySelector("span").innerText.split(",").map(s => s.trim());
-
-    // Seguro
-    dataPoint.seguro = element.children[4].innerText.split("|")[1].trim();
-
-    // Exam Type
-    dataPoint.exam_Type = element.children[7].innerText.trim();
-
-    // Date
-    dataPoint.date = new Date(element.children[9].innerText.split(" ")[0].trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
-}
-
-console.log(data);
-
-// SEARCH DATA
-const startDate = document.getElementById('ctl00_MainContent_txtRptExamDate');
-const endDate = document.getElementById('ctl00_MainContent_txtRptExamEndDate');
-
-// Select Finalizados
-document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
-
-// Search
-document.getElementById('ctl00_MainContent_cmdRptSearch').click() */
-

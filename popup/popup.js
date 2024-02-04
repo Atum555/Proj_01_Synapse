@@ -1,20 +1,4 @@
-function handleResponse(response) {
-    console.log(response);
-/*     if (response === 'search') {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            const activeTab = tabs[0];
-            chrome.scripting.executeScript({
-                'target': { 'tabId': activeTab.id },
-                'func': () => {
-                    console.log(atum);
-                    __doPostBack('ctl00$MainContent$cmdRptSearch','');
-                }
-            });
-        });
-    } */
-}
-
-function sendData() {
+function sendRequest() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
         const month = document.getElementsByClassName('month-btn-active')[0].innerText;
@@ -58,7 +42,10 @@ function sendData() {
         chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);
     });
 }
-setInterval(sendData, 250);
+function handleResponse(response) {
+    console.log(response);
+}
+setInterval(sendRequest, 250);
 
 (() => {
     for (let i = 0; i < 10; i++) {
@@ -119,7 +106,7 @@ setInterval(sendData, 250);
                         btn.classList.remove("month-btn-active");
                     });
                     event.target.classList.add("month-btn-active");
-                    sendData();
+                    sendRequest();
                 });
             });
             // Dispatch click on first month
