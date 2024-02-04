@@ -1,12 +1,355 @@
 [
     {
-        "id": 0,
+        "i": 0,
         "exams": [
-            "TAC CEREBRAL/CRANIO",
-            "TAC COLUNA CERVICAL"
+            "ANGIO TAC TRONCOS SUPRA-AORTICOS",
+            "ANGIO TAC CRANIO - ENCEFALICA/CEREBRAL",
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "CENTRO HOSPITALAR PÓVOA VARZIM / VILA CONDE ? INTERNAMENTO",
+        "exam_Type": "CT",
+        "date": "2023-10-12T00:00:00.000Z"
+    },
+    {
+        "i": 1,
+        "exams": [
+            "RMN COLUNA CERVICAL"
+        ],
+        "seguro": "MULTICARE - FIDELIDADE MUNDIAL",
+        "exam_Type": "MR",
+        "date": "2023-10-23T00:00:00.000Z"
+    },
+    {
+        "i": 2,
+        "exams": [
+            "TAC SEIOS PERINASAIS"
+        ],
+        "seguro": "ADSE I.P.",
+        "exam_Type": "CT",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 3,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "SAMS NORTE",
+        "exam_Type": "CT",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 4,
+        "exams": [
+            "TAC SEIOS PERINASAIS"
+        ],
+        "seguro": "ADVANCECARE - UNA (GROUPAMA)",
+        "exam_Type": "CT",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 5,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "ADSE I.P.",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 6,
+        "exams": [
+            "RMN COLUNA LOMBAR"
+        ],
+        "seguro": "ADSE I.P.",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 7,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "ALLIANZ - SEGUROS DE SAÚDE",
+        "exam_Type": "MR",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 8,
+        "exams": [
+            "TAC COLUNA LOMBAR"
+        ],
+        "seguro": "ARS NORTE - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 9,
+        "exams": [
+            "RMN COLUNA LOMBAR"
+        ],
+        "seguro": "CARTÃO CLIENTE TROFA SAUDE",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 10,
+        "exams": [
+            "TAC SEIOS PERINASAIS"
+        ],
+        "seguro": "ADVANCECARE - MGEN",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 11,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "ALLIANZ - SEGUROS DE SAÚDE",
+        "exam_Type": "MR",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 12,
+        "exams": [
+            "RMN COLUNA LOMBAR"
+        ],
+        "seguro": "MEDIS - SAÚDE",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 13,
+        "exams": [
+            "RX COLUNA LOMBAR ESTUDO FUNCIONAL 4 INCIDENCIAS"
+        ],
+        "seguro": "MEDIS - SAÚDE",
+        "exam_Type": "CR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 14,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "ARS NORTE - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 15,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "ADSE I.P.",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 16,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "MULTICARE - FIDELIDADE MUNDIAL",
+        "exam_Type": "MR",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 17,
+        "exams": [
+            "TAC COLUNA LOMBAR"
+        ],
+        "seguro": "ARS NORTE - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 18,
+        "exams": [
+            "RMN COLUNA CERVICAL"
+        ],
+        "seguro": "MULTICARE - FIDELIDADE MUNDIAL",
+        "exam_Type": "MR",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 19,
+        "exams": [
+            "TAC SEIOS PERINASAIS"
+        ],
+        "seguro": "HOSPITAL DA SENHORA DA OLIVEIRA GUIMARÃES - AMBULATÓRIO",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 20,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "CENTRO HOSPITALAR LISBOA OCIDENTAL, EPE",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 21,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
         ],
         "seguro": "CARTÃO CLIENTE TROFA SAUDE",
         "exam_Type": "CT",
-        "date": "21/12/2023"
+        "date": "2023-10-23T00:00:00.000Z"
+    },
+    {
+        "i": 22,
+        "exams": [
+            "RMN COLUNA LOMBOSAGRADA"
+        ],
+        "seguro": "HOSPITAL DA SENHORA DA OLIVEIRA GUIMARÃES - AMBULATÓRIO",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 23,
+        "exams": [
+            "RMN COLUNA CERVICAL"
+        ],
+        "seguro": "HOSPITAL DA SENHORA DA OLIVEIRA GUIMARÃES - AMBULATÓRIO",
+        "exam_Type": "MR",
+        "date": "2023-11-03T00:00:00.000Z"
+    },
+    {
+        "i": 24,
+        "exams": [
+            "RMN COLUNA LOMBOSAGRADA"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 25,
+        "exams": [
+            "RMN COLUNA LOMBOSAGRADA"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 26,
+        "exams": [
+            "RMN COLUNA LOMBOSAGRADA"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 27,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 28,
+        "exams": [
+            "RMN OUVIDOS"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-27T00:00:00.000Z"
+    },
+    {
+        "i": 29,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-27T00:00:00.000Z"
+    },
+    {
+        "i": 30,
+        "exams": [
+            "RMN CRANIO-ENCEFALICO/CEREBRAL"
+        ],
+        "seguro": "HOSPITAL DE BRAGA E.P.E",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 31,
+        "exams": [
+            "RMN COLUNA CERVICAL"
+        ],
+        "seguro": "CENTRO HOSPITALAR POVOA VARZIM / VILA DO CONDE",
+        "exam_Type": "MR",
+        "date": "2023-11-06T00:00:00.000Z"
+    },
+    {
+        "i": 32,
+        "exams": [
+            "RMN OUVIDOS"
+        ],
+        "seguro": "SAMS / SIB",
+        "exam_Type": "MR",
+        "date": "2023-11-08T00:00:00.000Z"
+    },
+    {
+        "i": 33,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "HOSPITAL SENHORA OLIVEIRA GUIMARÃES",
+        "exam_Type": "CT",
+        "date": "2023-10-26T00:00:00.000Z"
+    },
+    {
+        "i": 34,
+        "exams": [
+            "TAC COLUNA LOMBAR"
+        ],
+        "seguro": "ARS LVT - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-11-23T00:00:00.000Z"
+    },
+    {
+        "i": 35,
+        "exams": [
+            "TAC CEREBRAL/CRANIO"
+        ],
+        "seguro": "ARS LVT - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-11-02T00:00:00.000Z"
+    },
+    {
+        "i": 36,
+        "exams": [
+            "TAC COLUNA LOMBAR"
+        ],
+        "seguro": "ARS LVT - MCDT",
+        "exam_Type": "CT",
+        "date": "2023-11-23T00:00:00.000Z"
+    },
+    {
+        "i": 37,
+        "exams": [
+            "TAC SEIOS PERINASAIS"
+        ],
+        "seguro": "PSP (01-10-2013)",
+        "exam_Type": "CT",
+        "date": "2023-11-07T00:00:00.000Z"
+    },
+    {
+        "i": 38,
+        "exams": [
+            "TAC COLUNA LOMBAR"
+        ],
+        "seguro": "ADSE I.P.",
+        "exam_Type": "CT",
+        "date": "2023-11-07T00:00:00.000Z"
     }
 ]
