@@ -1,14 +1,14 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');
-    const endDateElem = document.getElementById('ctl00_MainContent_txtRptExamEndDate');
-    const startDate = startDateElem.value;
-    const endDate = endDateElem.value;
-
-    if (startDate === request.data.startDate && endDate === request.data.endDate) {
-        // Get Data
+    try {
         let data = [];
+        const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');
+        const endDateElem = document.getElementById('ctl00_MainContent_txtRptExamEndDate');
+        const startDate = startDateElem.value;
+        const endDate = endDateElem.value;
 
-        try {
+        if (startDate === request.data.startDate && endDate === request.data.endDate) {
+            // Get Data
+
             const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
 
             for (let i = 0; i < rows.length; i++) {
@@ -30,22 +30,23 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 dataPoint.date = new Date(rows[i].children[9].innerText.split(" ")[0].trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
                 data.push(dataPoint);
             }
-        } finally {
             sendResponse({ 'data': data });
+
+        } else {
+            // SEARCH DATA
+            startDateElem.value = request.data.startDate;
+            endDateElem.value = request.data.endDate;
+
+            // Select Finalizados
+            document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
+
+            // Search
+            window.postMessage({
+                'direction': 'from-content-script',
+                'message': 'search'
+            });
         }
-
-    } else {
-        // SEARCH DATA
-        startDateElem.value = request.data.startDate;
-        endDateElem.value = request.data.endDate;
-
-        // Select Finalizados
-        document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
-
-        // Search
-        window.postMessage({
-            'direction': 'from-content-script',
-            'message': 'search'
-        });
+    } catch {
+        sendResponse({});
     }
 });

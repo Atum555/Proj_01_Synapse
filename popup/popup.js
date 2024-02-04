@@ -1,10 +1,9 @@
 function handleResponse(response) {
-    console.log(response);
-    const data = response.data;
+    const data = response?.data;
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
-    if (data.length === 0) {
+    if (response && data?.length === 0) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';
