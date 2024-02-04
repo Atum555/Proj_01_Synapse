@@ -1,3 +1,4 @@
+let globalData = {};
 function handleResponse(response) {
     const rData = response?.data;
     const totalElem = document.getElementById('table-total');
@@ -40,26 +41,28 @@ function handleResponse(response) {
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
 
-    console.log(data);
+    if (globalData == data) { return;}
+    globalData = data;
+    
     let rows = [];
     for (const examType in data) {
         let first = true;
-        for (const exam in examType.exam) {
+        for (const exam in data[examType].exams) {
             const name = document.createElement('td');
             const count = document.createElement('td');
             const subTotal = document.createElement('td');
-            name.innerText = exam.name;
-            count.innerText = exam.count;
-            subTotal.innerText = exam.subTotal;
+            name.innerText = data[examType].exams[exam].name;
+            count.innerText = data[examType].exams[exam].count;
+            subTotal.innerText = data[examType].exams[exam].subTotal;
             if (first) {
                 first = false;
                 const mainRow = document.createElement('tr');
                 const mainSubTotal = document.createElement('td');
-                mainSubTotal.innerHTML = `${examType.count}<br>${examType.subTotal}`;
-                mainSubTotal.rowSpan = examType.exams.length;
+                mainSubTotal.innerHTML = `${data[examType].count}<br>${data[examType].subTotal}`;
+                mainSubTotal.rowSpan = data[examType].exams.length;
                 const mainName = document.createElement('td');
-                mainName.innerText = examType.name;
-                mainName.rowSpan = examType.exams.length;
+                mainName.innerText = data[examType].name;
+                mainName.rowSpan = data[examType].exams.length;
                 mainRow.replaceChildren(mainSubTotal, mainName, name, count, subTotal);
                 rows.push(mainRow);
             } else {
