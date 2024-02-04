@@ -15,9 +15,6 @@ function handleResponse(response) {
     }
 
     // Data Population
-    tableElem.style.display = '';
-    warningElem.style.display = 'none';
-
     let data = {};
     rData.forEach((item) => {
         // Exam Type
@@ -45,24 +42,26 @@ function handleResponse(response) {
     globalData = data;
 
     let rows = [];
+    let total = 0;
     for (const examType in data) {
         let first = true;
+        total += data[examType].subTotal;
         for (const exam in data[examType].exams) {
             const name = document.createElement('td');
             const count = document.createElement('td');
             const subTotal = document.createElement('td');
             name.innerText = data[examType].exams[exam].name;
             count.innerText = data[examType].exams[exam].count;
-            subTotal.innerText = data[examType].exams[exam].subTotal;
+            subTotal.innerText = `${data[examType].exams[exam].subTotal}€`;
             if (first) {
                 first = false;
                 const mainRow = document.createElement('tr');
                 const mainSubTotal = document.createElement('td');
-                mainSubTotal.innerHTML = `${data[examType].count}<br>${data[examType].subTotal}`;
-                mainSubTotal.rowSpan = data[examType].exams.length;
+                mainSubTotal.innerHTML = `${data[examType].count}<br>${data[examType].subTotal}<span>€</span>`;
+                mainSubTotal.rowSpan = Object.keys( data[examType].exams).length;
                 const mainName = document.createElement('td');
                 mainName.innerText = data[examType].name;
-                mainName.rowSpan = data[examType].exams.length;
+                mainName.rowSpan = Object.keys( data[examType].exams).length;
                 mainRow.replaceChildren(mainSubTotal, mainName, name, count, subTotal);
                 rows.push(mainRow);
             } else {
@@ -72,8 +71,11 @@ function handleResponse(response) {
             }
         }
     }
+    totalElem.innerText = total;
     const tbody = document.getElementById('table-body');
     tbody.replaceChildren(...rows);
+    warningElem.style.display = 'none';
+    tableElem.style.display = '';
 }
 
 function sendRequest() {
