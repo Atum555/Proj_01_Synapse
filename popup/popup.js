@@ -41,7 +41,7 @@ function handleResponse(response) {
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
 
-    if (globalData == data) { return;}
+    if ( JSON.stringify(globalData) === JSON.stringify(data)) { return;}
     globalData = data;
     
     let rows = [];
