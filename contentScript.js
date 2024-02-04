@@ -10,27 +10,30 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
         let data = [];
 
-        for (let i = 0; i < rows.length; i++) {
-            let dataPoint = {};
+        try {
+            for (let i = 0; i < rows.length; i++) {
+                let dataPoint = {};
 
-            // Index
-            dataPoint.i = i;
+                // Index
+                dataPoint.i = i;
 
-            // Exams
-            dataPoint.exams = rows[i].children[2].querySelector("span").innerText.split(",").map(s => s.trim());
+                // Exams
+                dataPoint.exams = rows[i].children[2].querySelector("span").innerText.split(",").map(s => s.trim());
 
-            // Seguro
-            dataPoint.seguro = rows[i].children[4].innerText.split("|")[1].trim();
+                // Seguro
+                dataPoint.seguro = rows[i].children[4].innerText.split("|")[1].trim();
 
-            // Exam Type
-            dataPoint.exam_Type = rows[i].children[7].innerText.trim();
+                // Exam Type
+                dataPoint.exam_Type = rows[i].children[7].innerText.trim();
 
-            // Date
-            dataPoint.date = new Date(rows[i].children[9].innerText.split(" ")[0].trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
-            data.push(dataPoint);
+                // Date
+                dataPoint.date = new Date(rows[i].children[9].innerText.split(" ")[0].trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
+                data.push(dataPoint);
+            }
+        } finally {
+            sendResponse({ 'data': data });
         }
 
-        sendResponse({ 'data': data });
     } else {
         // SEARCH DATA
         startDateElem.value = request.data.startDate;
