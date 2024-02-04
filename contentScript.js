@@ -6,11 +6,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     if (startDate === request.data.startDate && endDate === request.data.endDate) {
         // Get Data
-        const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
-
         let data = [];
 
         try {
+            const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
+
             for (let i = 0; i < rows.length; i++) {
                 let dataPoint = {};
 
