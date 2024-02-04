@@ -10,6 +10,14 @@ function handleResponse(response) {
     if (!rData) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
+        warningElem.innerText = 'Loading...';
+        warningElem.style.display = '';
+        return;
+    }
+    if (response === 'no-data') {
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'Não existem exames para esta data.';
         warningElem.style.display = '';
         return;
     }

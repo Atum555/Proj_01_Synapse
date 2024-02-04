@@ -4,11 +4,10 @@
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0"
-        />
+            content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <style>
-            @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
             :root {
                 --text-color: rgb(70, 121, 151);
@@ -24,17 +23,15 @@
                 margin: 0;
                 margin-top: 1em;
 
-                font-family: "Roboto", sans-serif;
+                font-family: 'Roboto', sans-serif;
             }
         </style>
         <link
             rel="stylesheet"
-            href="header.css"
-        />
+            href="header.css" />
         <link
             rel="stylesheet"
-            href="table.css"
-        />
+            href="table.css" />
     </head>
 
     <body>
@@ -47,8 +44,14 @@
                 Total:
                 <span id="table-total">0000</span>€
             </h1>
-            <h2 id="content-warning" style="color: red;">Não existem exames para esta data.</h2>
-            <table id="content-table" style="display: none;">
+            <h2
+                id="content-warning"
+                style="color: red">
+                Loading...
+            </h2>
+            <table
+                id="content-table"
+                style="display: none">
                 <thead>
                     <tr>
                         <th>SubTotal</th>
