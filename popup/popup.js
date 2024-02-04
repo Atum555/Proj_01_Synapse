@@ -1,3 +1,7 @@
+function handleResponse(response) {
+    console.log(response);
+}
+
 function sendData() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
