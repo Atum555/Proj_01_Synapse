@@ -44,6 +44,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             'direction': 'from-content-script',
             'message': 'search'
         });
-        console.log("Message Sent!");
     }
 });
