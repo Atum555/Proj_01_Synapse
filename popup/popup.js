@@ -5,7 +5,7 @@ function handleResponse(response) {
         chrome.scripting.executeScript({
             'target': { 'tabId': activeTab.id },
             'func': () => {
-                document.getElementById("ctl00_MainContent_cmdRptSearch").click();
+                __doPostBack('ctl00$MainContent$cmdRptSearch','');
             }
         });
     });
