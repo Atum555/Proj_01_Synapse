@@ -20,19 +20,26 @@ function handleResponse(response) {
     let data = {};
     rData.forEach((item) => {
         // Exam Type
-        if (!data.hasOwnProperty(item.exam_Type)) { data[item.exam_Type] = { 'count': 0, 'exams': {}, 'seguros': {} }; }
+        if (!data.hasOwnProperty(item.exam_Type)) {
+            data[item.exam_Type] = { 'count': 0, 'total': 0, 'exams': {}, 'seguros': {} };
+        }
         data[item.exam_Type].count += 1;
 
         // Exams
         item.exams.forEach((exam) => {
-            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) { data[item.exam_Type].exams[exam] = { 'count': 0, 'value': 10 }; }
+            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) {
+                data[item.exam_Type].exams[exam] = { 'count': 0, 'value': 10, 'subTotal': 0 };
+            }
             data[item.exam_Type].exams[exam].count += 1;
+            data[item.exam_Type].exams[exam].subTotal += data[item.exam_Type].exams[exam].value;
+            data[item.exam_Type].total += data[item.exam_Type].exams[exam].value;
         });
 
         // Seguros
         if (!data[item.exam_Type].seguros.hasOwnProperty(item.seguro)) { data[item.exam_Type].seguros[item.seguro] = 0; }
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
+
 
 
     console.log(data);
