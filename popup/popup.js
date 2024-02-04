@@ -1,8 +1,11 @@
-function handleResponse(data) {
+function handleResponse(response) {
+    const year = document.getElementsByClassName('year-btn-active')[0].innerText;
+    const month = document.getElementsByClassName('month-btn-active')[0].innerText;
+    const data = response.data;
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
-    if (data.length === 0) {
+    if (data.length === 0 || month !== response.month || year !== response.year) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';
@@ -48,7 +51,9 @@ function sendRequest() {
         const endDate = monthMapperEnd[month] + year;
         const data = {
             'startDate': startDate,
-            'endDate': endDate
+            'endDate': endDate,
+            'month': month,
+            'year': year
         }
 
         // Send Message
