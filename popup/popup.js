@@ -1,11 +1,9 @@
 function handleResponse(response) {
-    const year = document.getElementsByClassName('year-btn-active')[0].innerText;
-    const month = document.getElementsByClassName('month-btn-active')[0].innerText;
     const data = response.data;
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
-    if (data.length === 0 || month !== response.month || year !== response.year) {
+    if (data.length === 0) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';

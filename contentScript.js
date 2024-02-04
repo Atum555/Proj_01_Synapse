@@ -30,11 +30,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             data.push(dataPoint);
         }
 
-        sendResponse({
-            'month': request.data.month,
-            'year': request.data.year,
-            'data': data
-        });
+        sendResponse({ 'data': data });
     } else {
         // SEARCH DATA
         startDateElem.value = request.data.startDate;
