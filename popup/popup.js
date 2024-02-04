@@ -1,16 +1,39 @@
 function handleResponse(response) {
-    const data = response?.data;
+    const rData = response?.data;
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
-    if (response && data?.length === 0) {
+
+    // No data
+    if (response && rData?.length === 0) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';
         return;
     }
+
+    // Data Population
     tableElem.style.display = '';
     warningElem.style.display = 'none';
+
+    let data = {};
+    rData.forEach((item) => {
+        // Exam Type
+        if (!data.hasOwnProperty(item.exam_Type)) { data[item.exam_Type] = { 'count': 0, 'exams': {}, 'seguros': {} }; }
+        data.count += 1;
+
+        // Exams
+        item.exams.forEach((exam) => {
+            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) { data[item.exam_Type].exams[exam] = 0; }
+            data[item.exam_Type].exams[exam] += 1;
+        });
+
+        // Seguros
+        if (!data[item.exam_Type].seguros.hasOwnProperty(item.seguro)) { data[item.exam_Type].seguros[item.seguro] = 0; }
+        data[item.exam_Type].seguros[item.seguro] += 1;
+    });
+
+    console.log(data);
 }
 
 function sendRequest() {
