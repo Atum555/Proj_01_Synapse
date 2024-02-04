@@ -1,4 +1,4 @@
-function handleResponse() {
+function handleResponse(data) {
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
