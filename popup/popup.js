@@ -5,7 +5,7 @@ function sendData() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
         const month = document.getElementsByClassName('month-btn-active')[0].innerText;
-        monthMapperStart = {
+        const monthMapperStart = {
             'Jan': '01/01/',
             'Fev': '01/02/',
             'Mar': '01/03/',
@@ -19,9 +19,9 @@ function sendData() {
             'Nov': '01/11/',
             'Dez': '01/12/'
         }
-        monthMapperEnd = {
+        const monthMapperEnd = {
             'Jan': '31/01/',
-            'Fev': (Number(year)%4 ? '28/02/' : '29/02/'),
+            'Fev': (Number(year) % 4 ? '28/02/' : '29/02/'),
             'Mar': '31/03/',
             'Abr': '30/04/',
             'Mai': '31/05/',
@@ -39,7 +39,7 @@ function sendData() {
             'startDate': startDate,
             'endDate': endDate
         }
-        
+
         // Send Message
         const activeTab = tabs[0];
         chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);

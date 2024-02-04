@@ -6,13 +6,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     if (startDate === request.data.startDate && endDate === request.data.endDate) {
         // Get Data
-        rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
+        const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
 
-        data = [];
+        let data = [];
 
         for (let i = 0; i < rows.length; i++) {
-            dataPoint = {};
-            
+            let dataPoint = {};
+
             // Index
             dataPoint.i = i;
 
@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
 
         // Search
-        document.getElementById('ctl00_MainContent_cmdRptSearch').click()
+        document.getElementById('ctl00_MainContent_cmdRptSearch').click();
     }
 });
 

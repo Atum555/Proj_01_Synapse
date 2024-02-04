@@ -3,14 +3,20 @@
     "name": "Exam examiner",
     "version": "1.0",
     "description": "Descrição por fazer!",
-    "permissions": ["activeTab"],
+    "permissions": [
+        "activeTab"
+    ],
     "action": {
         "default_popup": "popup/popup.html"
     },
     "content_scripts": [
         {
-            "matches": ["https://cwm.trofasaude.com/*"],
-            "js": ["contentScript.js"]
+            "matches": [
+                "https://cwm.trofasaude.com/*"
+            ],
+            "js": [
+                "contentScript.js"
+            ]
         }
     ]
 }
