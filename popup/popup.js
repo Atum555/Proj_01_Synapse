@@ -58,10 +58,10 @@ function handleResponse(response) {
                 const mainRow = document.createElement('tr');
                 const mainSubTotal = document.createElement('td');
                 mainSubTotal.innerHTML = `${data[examType].count}<br>${data[examType].subTotal}<span>€</span>`;
-                mainSubTotal.rowSpan = Object.keys( data[examType].exams).length;
+                mainSubTotal.rowSpan = Object.keys(data[examType].exams).length;
                 const mainName = document.createElement('td');
                 mainName.innerText = data[examType].name;
-                mainName.rowSpan = Object.keys( data[examType].exams).length;
+                mainName.rowSpan = Object.keys(data[examType].exams).length;
                 mainRow.replaceChildren(mainSubTotal, mainName, name, count, subTotal);
                 rows.push(mainRow);
             } else {
