@@ -1,17 +1,51 @@
-/* function sendData() {
+function handleResponse(response) {
+    console.log(response);
+}
+function sendData() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const year = document.getElementsByClassName('year-btn-active')[0].innerText;
+        const month = document.getElementsByClassName('month-btn-active')[0].innerText;
+        monthMapperStart = {
+            'Jan': '01/01/',
+            'Fev': '01/02/',
+            'Mar': '01/03/',
+            'Abr': '01/04/',
+            'Mai': '01/05/',
+            'Jun': '01/06/',
+            'Jul': '01/07/',
+            'Ago': '01/08/',
+            'Set': '01/09/',
+            'Out': '01/10/',
+            'Nov': '01/11/',
+            'Dez': '01/12/'
+        }
+        monthMapperEnd = {
+            'Jan': '31/01/',
+            'Fev': (Number(year)%4 ? '28/02/' : '29/02/'),
+            'Mar': '31/03/',
+            'Abr': '30/04/',
+            'Mai': '31/05/',
+            'Jun': '30/06/',
+            'Jul': '31/07/',
+            'Ago': '31/08/',
+            'Set': '30/09/',
+            'Out': '31/10/',
+            'Nov': '30/11/',
+            'Dez': '31/12/'
+        }
+        const startDate = monthMapperStart[month] + year;
+        const endDate = monthMapperEnd[month] + year;
+        const data = {
+            'startDate': startDate,
+            'endDate': endDate
+        }
+        
+        // Send Message
         const activeTab = tabs[0];
-        const text = document.getElementById("inText").value;
-        chrome.tabs.sendMessage(activeTab.id, { "data": text }, handleResponse);
+        chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);
     });
 }
-
-function handleResponse(response) {
-    document.getElementById("inText").style.borderColor = response ? "salmon" : "chartreuse";
-}
-
-document.getElementById('inText').addEventListener('input', sendData);
-setInterval(sendData, 250); */
+setInterval(sendData, 250);
 
 (() => {
     for (let i = 0; i < 10; i++) {
@@ -65,13 +99,14 @@ setInterval(sendData, 250); */
                 document.getElementById("month-selector").appendChild(monthBtn);
             }
 
-            // Add event listeners to years buttons
+            // Add event listeners to months buttons
             document.querySelectorAll(".month-btn").forEach((btn) => {
                 btn.addEventListener("click", (event) => {
                     document.querySelectorAll(".month-btn").forEach((btn) => {
                         btn.classList.remove("month-btn-active");
                     });
                     event.target.classList.add("month-btn-active");
+                    sendData();
                 });
             });
             // Dispatch click on first month

@@ -1,24 +1,16 @@
 {
     "manifest_version": 3,
-    "name": "Tuna Connect",
-    "version": "1.0.0",
-    "description": "Connect to atum!",
-    "permissions": [
-        "scripting",
-        "activeTab"
-    ],
+    "name": "Exam examiner",
+    "version": "1.0",
+    "description": "Descrição por fazer!",
+    "permissions": ["activeTab"],
     "action": {
         "default_popup": "popup/popup.html"
     },
     "content_scripts": [
         {
-            "matches": [
-                "https://*.atumm.pt/*",
-                "https://*.google.com/*"
-            ],
-            "js": [
-                "contentScript.js"
-            ]
+            "matches": ["https://cwm.trofasaude.com/*"],
+            "js": ["contentScript.js"]
         }
     ]
 }
