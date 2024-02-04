@@ -4,7 +4,7 @@ window.addEventListener("message", (event) => {
     console.log(event?.data);
     if (
         event.source === window &&
-        event?.data?.direction === "from-page-script" &&
+        event?.data?.direction === "from-content-script" &&
         event?.data?.message === 'search'
     ) {
         console.log("Message Valid!");
