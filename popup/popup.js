@@ -3,6 +3,7 @@ function handleResponse(response) {
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
+    const tbodyElem = document.getElementById('table-body');
 
     // No data
     if (!rData) {
@@ -24,14 +25,15 @@ function handleResponse(response) {
 
         // Exams
         item.exams.forEach((exam) => {
-            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) { data[item.exam_Type].exams[exam] = 0; }
-            data[item.exam_Type].exams[exam] += 1;
+            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) { data[item.exam_Type].exams[exam] = { 'count': 0, 'value': 10 }; }
+            data[item.exam_Type].exams[exam].count += 1;
         });
 
         // Seguros
         if (!data[item.exam_Type].seguros.hasOwnProperty(item.seguro)) { data[item.exam_Type].seguros[item.seguro] = 0; }
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
+
 
     console.log(data);
 }
