@@ -42,9 +42,9 @@ function handleResponse(response) {
 
     console.log(data);
     let rows = [];
-    data.forEach((examType) => {
+    for (const examType in data) {
         let first = true;
-        examType.exams.forEach((exam) => {
+        for (const exam in examType.exam) {
             const name = document.createElement('td');
             const count = document.createElement('td');
             const subTotal = document.createElement('td');
@@ -67,8 +67,8 @@ function handleResponse(response) {
                 tr.replaceChildren(name, count, subTotal);
                 rows.push(tr);
             }
-        });
-    });
+        }
+    }
     const tbody = document.getElementById('table-body');
     tbody.replaceChildren(...rows);
 }
