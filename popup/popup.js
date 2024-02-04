@@ -21,18 +21,18 @@ function handleResponse(response) {
     rData.forEach((item) => {
         // Exam Type
         if (!data.hasOwnProperty(item.exam_Type)) {
-            data[item.exam_Type] = { 'count': 0, 'total': 0, 'exams': {}, 'seguros': {} };
+            data[item.exam_Type] = { 'name': item.exam_Type, 'count': 0, 'subTotal': 0, 'exams': {}, 'seguros': {} };
         }
         data[item.exam_Type].count += 1;
 
         // Exams
         item.exams.forEach((exam) => {
             if (!data[item.exam_Type].exams.hasOwnProperty(exam)) {
-                data[item.exam_Type].exams[exam] = { 'count': 0, 'value': 10, 'subTotal': 0 };
+                data[item.exam_Type].exams[exam] = { 'name': exam, 'count': 0, 'value': 10, 'subTotal': 0 };
             }
             data[item.exam_Type].exams[exam].count += 1;
             data[item.exam_Type].exams[exam].subTotal += data[item.exam_Type].exams[exam].value;
-            data[item.exam_Type].total += data[item.exam_Type].exams[exam].value;
+            data[item.exam_Type].subTotal += data[item.exam_Type].exams[exam].value;
         });
 
         // Seguros
@@ -40,9 +40,36 @@ function handleResponse(response) {
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
 
-
-
-    console.log(data);
+    let rows = [];
+    data.forEach((examType) => {
+        let first = true;
+        examType.exams.forEach((exam) => {
+            const name = document.createElement('td');
+            const count = document.createElement('td');
+            const subTotal = document.createElement('td');
+            name.innerText = exam.name;
+            count.innerText = exam.count;
+            subTotal.innerText = exam.subTotal;
+            if (first) {
+                first = false;
+                const mainRow = document.createElement('tr');
+                const mainSubTotal = document.createElement('td');
+                mainSubTotal.innerHTML = `${examType.count}<br>${examType.subTotal}`;
+                mainSubTotal.rowSpan = examType.exams.length;
+                const mainName = document.createElement('td');
+                mainName.innerText = examType.name;
+                mainName.rowSpan = examType.exams.length;
+                mainRow.replaceChildren(mainSubTotal, mainName, name, count, subTotal);
+                rows.push(mainRow);
+            } else {
+                const tr = document.createElement('tr');
+                tr.replaceChildren(name, count, subTotal);
+                rows.push(tr);
+            }
+        });
+    });
+    const tbody = document.getElementById('table-body');
+    tbody.replaceChildren(...rows);
 }
 
 function sendRequest() {
