@@ -40,6 +40,7 @@ function handleResponse(response) {
         data[item.exam_Type].seguros[item.seguro] += 1;
     });
 
+    console.log(data);
     let rows = [];
     data.forEach((examType) => {
         let first = true;
