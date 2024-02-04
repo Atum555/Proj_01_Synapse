@@ -20,7 +20,7 @@ function handleResponse(response) {
     rData.forEach((item) => {
         // Exam Type
         if (!data.hasOwnProperty(item.exam_Type)) { data[item.exam_Type] = { 'count': 0, 'exams': {}, 'seguros': {} }; }
-        data.count += 1;
+        data[item.exam_Type].count += 1;
 
         // Exams
         item.exams.forEach((exam) => {
