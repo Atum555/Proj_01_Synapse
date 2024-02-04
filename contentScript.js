@@ -45,6 +45,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
+(() => {
+    const myJavaScript = `
+function handleResponse(response) {
+    console.log(response);
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const activeTab = tabs[0];
+        chrome.scripting.executeScript({
+            'target': { 'tabId': activeTab.id },
+            'func': () => {
+                __doPostBack('ctl00$MainContent$cmdRptSearch', '');
+            }
+        });
+    });
+}`;    //You need to put your JS here. 
+    const scriptTag = document.createElement("script");
+    scriptTag.innerHTML = myJavaScript;
+    document.head.appendChild(scriptTag);
+})();
+
 /* // GET DATA
 rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;
 
