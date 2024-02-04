@@ -4,12 +4,12 @@ function handleResponse(data) {
     const warningElem = document.getElementById('content-warning');
     if (data.length === 0) {
         totalElem.innerText = '0000';
-        tableElem.style.visibility = 'hidden';
-        warningElem.style.visibility = '';
+        tableElem.style.display = 'none';
+        warningElem.style.display = '';
         return;
     }
-    tableElem.style.visibility = '';
-    warningElem.style.visibility = 'hidden';
+    tableElem.style.display = '';
+    warningElem.style.display = 'none';
 }
 
 function sendRequest() {
