@@ -5,7 +5,7 @@ function handleResponse(response) {
     const warningElem = document.getElementById('content-warning');
 
     // No data
-    if (response && rData?.length === 0) {
+    if (!response || rData?.length == 0) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
         warningElem.style.display = '';
