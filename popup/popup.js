@@ -1,5 +1,10 @@
 function handleResponse(response) {
     console.log(response);
+    if (response === 'search') {
+        chrome.tabs.executeScript({
+            'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
+        });
+    }
 }
 function sendData() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {

@@ -40,7 +40,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         document.getElementById('ctl00_MainContent_ddlRptStatus').value = '6';
 
         // Search
-        document.getElementById('ctl00_MainContent_cmdRptSearch').click();
+        sendResponse('search');
+        return;
+        chrome.tabs.executeScript({
+            'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
+        });
     }
 });
 
