@@ -72,8 +72,7 @@ function handleResponse(response) {
         }
     }
     totalElem.innerText = total;
-    const tbody = document.getElementById('table-body');
-    tbody.replaceChildren(...rows);
+    tbodyElem.replaceChildren(...rows);
     warningElem.style.display = 'none';
     tableElem.style.display = '';
 }
