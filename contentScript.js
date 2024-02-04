@@ -42,9 +42,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         // Search
         sendResponse('search');
         return;
-        chrome.tabs.executeScript({
-            'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
-        });
     }
 });
 

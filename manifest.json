@@ -4,7 +4,7 @@
     "version": "1.0",
     "description": "Descrição por fazer!",
     "permissions": [
-        "activeTab"
+        "activeTab","scripting"
     ],
     "action": {
         "default_popup": "popup/popup.html"

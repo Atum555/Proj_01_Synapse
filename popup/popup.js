@@ -1,7 +1,7 @@
 function handleResponse(response) {
     console.log(response);
     if (response === 'search') {
-        chrome.tabs.executeScript({
+        chrome.scripting.executeScript({
             'code': 'document.getElementById("ctl00_MainContent_cmdRptSearch").click();'
         });
     }
