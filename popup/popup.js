@@ -1,4 +1,5 @@
 function handleResponse(response) {
+    console.log(response);
     const data = response.data;
     const totalElem = document.getElementById('table-total');
     const tableElem = document.getElementById('content-table');
