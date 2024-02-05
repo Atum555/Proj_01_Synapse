@@ -2,8 +2,8 @@ let globalData = {};
 function handleResponse(response) {
     const rData = response?.data;
     const totalElem = document.getElementById('table-total');
-    const tableElem = document.getElementById('content-table');
     const warningElem = document.getElementById('content-warning');
+    const tableElem = document.getElementById('content-table');
     const tbodyElem = document.getElementById('table-body');
 
     // No data
@@ -14,6 +14,7 @@ function handleResponse(response) {
         warningElem.style.display = '';
         return;
     }
+    // Error
     if (!rData) {
         totalElem.innerText = '0000';
         tableElem.style.display = 'none';
@@ -26,64 +27,95 @@ function handleResponse(response) {
     let data = {};
     rData.forEach((item) => {
         // Exam Type
-        if (!data.hasOwnProperty(item.exam_Type)) {
-            data[item.exam_Type] = { 'name': item.exam_Type, 'count': 0, 'subTotal': 0, 'exams': {}, 'seguros': {} };
+        const exam_Type = item.exam_Type;
+        const seguro = item.seguro;
+
+        // Create exam_Type if non existent
+        if (!data.hasOwnProperty(exam_Type)) {
+            data[exam_Type] = { 'name': exam_Type, 'count': 0, 'subTotalOuter': 0, 'exams': {}, 'seguros': {} };
         }
-        data[item.exam_Type].count += 1;
+        // Increase exam_Type count
+        data[exam_Type].count += 1;
+
+        // Seguros
+        // Create seguro if non existent
+        if (!data[exam_Type].seguros.hasOwnProperty(seguro)) { data[exam_Type].seguros[seguro] = 0; }
+        data[exam_Type].seguros[seguro] += 1;
+
 
         // Exams
         item.exams.forEach((exam) => {
-            if (!data[item.exam_Type].exams.hasOwnProperty(exam)) {
-                data[item.exam_Type].exams[exam] = { 'name': exam, 'count': 0, 'value': 10, 'subTotal': 0 };
+            const value = 10;
+            // Create exam if non existent
+            if (!data[exam_Type].exams.hasOwnProperty(exam)) {
+                data[exam_Type].exams[exam] = { 'name': exam, 'count': 0, 'value': value, 'subTotalInner': 0 };
             }
-            data[item.exam_Type].exams[exam].count += 1;
-            data[item.exam_Type].exams[exam].subTotal += data[item.exam_Type].exams[exam].value;
-            data[item.exam_Type].subTotal += data[item.exam_Type].exams[exam].value;
+            // Increase exam count
+            // Increase subTotalInner
+            // Increase subTotalOuter
+            data[exam_Type].exams[exam].count += 1;
+            data[exam_Type].exams[exam].subTotalInner += value;
+            data[exam_Type].subTotalOuter += value;
         });
-
-        // Seguros
-        if (!data[item.exam_Type].seguros.hasOwnProperty(item.seguro)) { data[item.exam_Type].seguros[item.seguro] = 0; }
-        data[item.exam_Type].seguros[item.seguro] += 1;
     });
 
+    // Don't update DOM if data didn't change
     if (JSON.stringify(globalData) === JSON.stringify(data)) { return; }
     globalData = data;
 
+    // Rows list && Total value
     let rows = [];
     let total = 0;
-    for (const examType in data) {
+    for (const exam_Type in data) {
+        const exams = data[exam_Type].exams;
+
+        // First row of this exam_Type
         let first = true;
-        total += data[examType].subTotal;
-        for (const exam in data[examType].exams) {
-            const name = document.createElement('td');
-            const count = document.createElement('td');
-            const subTotal = document.createElement('td');
-            name.innerText = data[examType].exams[exam].name;
-            count.innerText = data[examType].exams[exam].count;
-            subTotal.innerText = `${data[examType].exams[exam].subTotal}€`;
+
+        // Update total
+        total += data[exam_Type].subTotalOuter;
+
+        for (const exam in exams) {
+            const nameElem = document.createElement('td');
+            const countElem = document.createElement('td');
+            const subTotalInnerElem = document.createElement('td');
+
+            nameElem.innerText = exams[exam].name;
+            countElem.innerText = exams[exam].count;
+            subTotalInnerElem.innerText = `${exams[exam].subTotalInner}€`;
+
+            // First row of this exam_Type
             if (first) {
                 first = false;
-                const mainRow = document.createElement('tr');
-                const mainSubTotal = document.createElement('td');
-                mainSubTotal.innerHTML = `${data[examType].count}<br>${data[examType].subTotal}<span>€</span>`;
-                mainSubTotal.rowSpan = Object.keys(data[examType].exams).length;
-                const mainName = document.createElement('td');
-                mainName.innerText = data[examType].name;
-                mainName.rowSpan = Object.keys(data[examType].exams).length;
-                mainRow.replaceChildren(mainSubTotal, mainName, name, count, subTotal);
+
+                const mainRowElem = document.createElement('tr');
+                const subTotalOuterElem = document.createElement('td');
+                const mainNameElem = document.createElement('td');
+
+                subTotalOuterElem.innerHTML =
+                    `${data[exam_Type].count}<br>${data[exam_Type].subTotalOuter}<span>€</span>`;
+
+                subTotalOuterElem.rowSpan = Object.keys(exams).length;
+
+                mainNameElem.innerText = data[exam_Type].name;
+                mainNameElem.rowSpan = Object.keys(exams).length;
+                mainRowElem.replaceChildren(subTotalOuterElem, mainNameElem, nameElem, countElem, subTotalInnerElem);
                 rows.push(mainRow);
-            } else {
+            }
+            // Other rows of this exam_Type
+            else {
                 const tr = document.createElement('tr');
-                tr.replaceChildren(name, count, subTotal);
+                tr.replaceChildren(nameElem, countElem, subTotalInnerElem);
                 rows.push(tr);
             }
         }
     }
-    totalElem.innerText = total;
     tbodyElem.replaceChildren(...rows);
+    totalElem.innerText = total;
     warningElem.style.display = 'none';
     tableElem.style.display = '';
 }
+
 
 function sendRequest() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
