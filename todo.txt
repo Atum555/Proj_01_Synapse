@@ -1,6 +1,8 @@
 TODO
 - Add Logotipo
-- Select multiple months
 - Export as pdf / excel
 - Settings
 - Export / Import values
+
+Done
+- Select multiple months

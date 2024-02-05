@@ -53,14 +53,14 @@ function handleResponse(response) {
             if (!data[exam_Type].exams.hasOwnProperty(exam)) {
                 data[exam_Type].exams[exam] = {
                     'name': exam,
-                    'count': 0, 
-                    'value': defaultValue, 
+                    'count': 0,
+                    'value': defaultValue,
                     'subTotalInner': 0,
                     'seguros': {}
                 };
             }
             // Create seguro if non existent
-            if (!data[exam_Type].exams[exam].hasOwnProperty(seguro)){
+            if (!data[exam_Type].exams[exam].hasOwnProperty(seguro)) {
                 data[exam_Type].exams[exam][seguro] = {
                     'name': seguro,
                     'count': 0,
@@ -144,7 +144,10 @@ function handleResponse(response) {
 function sendRequest() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
-        const month = document.getElementsByClassName('month-btn-active')[0].innerText;
+        let months = [];
+        Array(...document.getElementsByClassName('month-btn-active')).forEach((monthElem) => {
+            months.push(monthElem.innerText);
+        });
         const monthMapperStart = {
             'Jan': '01/01/',
             'Fev': '01/02/',
@@ -173,15 +176,18 @@ function sendRequest() {
             'Nov': '30/11/',
             'Dez': '31/12/'
         }
-        const startDate = monthMapperStart[month] + year;
-        const endDate = monthMapperEnd[month] + year;
+
+        const startDate = monthMapperStart[months[months.length - 1]] + year;
+        const endDate = monthMapperEnd[months[0]] + year;
         const data = {
             'startDate': startDate,
             'endDate': endDate,
-            'month': month,
+            'months': months,
             'year': year
         }
 
+        // ! console!
+        console.log(data);
         // Send Message
         const activeTab = tabs[0];
         if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
@@ -216,11 +222,6 @@ setInterval(sendRequest, 250);
             // Set Active
             event.target.classList.add("year-btn-active");
 
-            // Remove old months buttons
-            document.querySelectorAll(".month-btn").forEach((btn) => {
-                btn.remove();
-            });
-
             // Create months buttons
             const numberToMonth = {
                 1: "Jan",
@@ -240,21 +241,48 @@ setInterval(sendRequest, 250);
             const currentYear = date.getFullYear();
             const currentMonth = date.getMonth();
             const maxMonth = Number(btn.innerText) == currentYear ? currentMonth + 1 : 12;
+            let months = [];
             for (let i = maxMonth; i >= 1; i--) {
                 const monthBtn = document.createElement("button");
                 monthBtn.classList.add("month-btn");
                 monthBtn.innerText = numberToMonth[i];
-                document.getElementById("month-selector").appendChild(monthBtn);
+                months.push(monthBtn);
             }
+            document.getElementById("month-selector").replaceChildren(...months);
 
             // Add event listeners to months buttons
             document.querySelectorAll(".month-btn").forEach((btn) => {
                 btn.addEventListener("click", (event) => {
-                    document.querySelectorAll(".month-btn").forEach((btn) => {
-                        btn.classList.remove("month-btn-active");
-                    });
-                    event.target.classList.add("month-btn-active");
-                    sendRequest();
+                    const thisBtn = event.target;
+                    
+                    // If month not active
+                    if (thisBtn.classList.length == 1) {
+                        const activeMonths = Array(...document.getElementsByClassName("month-btn-active"));
+
+                        // If thisMonth not next to an active month remove all active months 
+                        if (
+                            (thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 1 : true) &&
+                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 1 : true)
+                        ) {
+                            activeMonths.forEach((btn) => {
+                                btn.classList.remove("month-btn-active");
+                            });
+                        }
+                        // Set this month to active
+                        thisBtn.classList.add("month-btn-active");
+                        sendRequest();
+                        return;
+                    }
+                    // If month active and one of the siblings active and the other not
+                    if (
+                        ((thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
+                            !(thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false)) ||
+                        (!(thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
+                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false)) 
+                    ) {
+                        thisBtn.classList.remove("month-btn-active");
+                        sendRequest();
+                    }
                 });
             });
             // Dispatch click on first month

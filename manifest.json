@@ -4,11 +4,10 @@
     "version": "1.0",
     "description": "Descrição por fazer!",
     "permissions": [
-        "activeTab","scripting"
+        "activeTab",
+        "scripting",
+        "storage"
     ],
-    "externally_connectable": {
-        "matches": ["https://cwm.trofasaude.com/*"]
-    },
     "action": {
         "default_popup": "popup/popup.html"
     },
