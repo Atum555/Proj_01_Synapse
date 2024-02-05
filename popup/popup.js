@@ -43,26 +43,41 @@ function handleResponse(response) {
         if (!data.hasOwnProperty(exam_Type)) {
             data[exam_Type] = { 'name': exam_Type, 'count': 0, 'subTotalOuter': 0, 'exams': {}, 'seguros': {} };
         }
-        // Increase exam_Type count
-        data[exam_Type].count += 1;
-
-        // Seguros
-        // Create seguro if non existent
-        if (!data[exam_Type].seguros.hasOwnProperty(seguro)) { data[exam_Type].seguros[seguro] = 0; }
-        data[exam_Type].seguros[seguro] += 1;
-
 
         // Exams
         item.exams.forEach((exam) => {
-            const value = 10;
+            const defaultValue = 10;
+            const seguroValue = 0;
+            const value = seguroValue | defaultValue;
             // Create exam if non existent
             if (!data[exam_Type].exams.hasOwnProperty(exam)) {
-                data[exam_Type].exams[exam] = { 'name': exam, 'count': 0, 'value': value, 'subTotalInner': 0 };
+                data[exam_Type].exams[exam] = {
+                    'name': exam,
+                    'count': 0, 
+                    'value': defaultValue, 
+                    'subTotalInner': 0,
+                    'seguros': {}
+                };
             }
+            // Create seguro if non existent
+            if (!data[exam_Type].exams[exam].hasOwnProperty(seguro)){
+                data[exam_Type].exams[exam][seguro] = {
+                    'name': seguro,
+                    'count': 0,
+                    'value': seguroValue,
+                    'subTotalSeguro': 0
+                }
+            }
+            // Increase exam_Type count
             // Increase exam count
+            // Increase seguro count
+            // Increase subTotalSeguro
             // Increase subTotalInner
             // Increase subTotalOuter
+            data[exam_Type].count += 1;
             data[exam_Type].exams[exam].count += 1;
+            data[exam_Type].exams[exam][seguro].count += 1;
+            data[exam_Type].exams[exam][seguro].subTotalSeguro += value;
             data[exam_Type].exams[exam].subTotalInner += value;
             data[exam_Type].subTotalOuter += value;
         });
