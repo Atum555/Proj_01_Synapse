@@ -128,7 +128,7 @@ function handleResponse(response) {
                 mainNameElem.innerText = data[exam_Type].name;
                 mainNameElem.rowSpan = Object.keys(exams).length;
                 mainRowElem.replaceChildren(subTotalOuterElem, mainNameElem, nameElem, countElem, subTotalInnerElem);
-                rows.push(mainRow);
+                rows.push(mainRowElem);
             }
             // Other rows of this exam_Type
             else {
@@ -317,10 +317,16 @@ document.getElementById('pdf-btn').addEventListener('click', async (event) => {
 
     myWindow.document.close(); // necessary for IE >= 10
     myWindow.focus(); // necessary for IE >= 10*/
-    setTimeout(() => {
+    myWindow.document.addEventListener('readystatechange', (event) => {
+        if (event.target.readyState === "complete") {
+            myWindow.print();
+            myWindow.close();
+        }
+    });
+    /* setTimeout(() => {
         myWindow.print();
         myWindow.close();
-    }, 500);
+    }, 500); */
 });
 /* TODO
  - Add Excel Btn EventListeners
