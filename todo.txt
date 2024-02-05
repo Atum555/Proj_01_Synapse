@@ -8,6 +8,10 @@ TODO
     // Next Page
     document.getElementById('ctl00_MainContent_lkReportNext').click()
 
+    1. Loop Through Each month
+    2. Loop Through Each month's pages
+    3. Make Table
+
 
 
 - Add to Seguros Table
