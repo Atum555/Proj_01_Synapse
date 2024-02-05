@@ -311,22 +311,27 @@ document.getElementById('pdf-btn').addEventListener('click', async (event) => {
     if (JSON.stringify(globalData) === JSON.stringify({})) { return; }
     let myWindow = window.open('', 'PRINT', 'height=400,width=600');
 
-    myWindow.document.write('<html>');
-    myWindow.document.write(document.querySelector("html").innerHTML);
-    myWindow.document.write('</html>');
+    myWindow.document.write('<html><head>');
+    myWindow.document.write(document.querySelector("head").innerHTML);
+    myWindow.document.write('</head><body><header>');
+    myWindow.document.write(document.querySelector("header").innerHTML);
+    myWindow.document.write('</header><main>');
+    myWindow.document.write(document.querySelector("main").innerHTML);
+    myWindow.document.write('</main>');
+    myWindow.document.write('</body></html>');
 
     myWindow.document.close(); // necessary for IE >= 10
     myWindow.focus(); // necessary for IE >= 10*/
-    myWindow.document.addEventListener('readystatechange', (event) => {
+/*     myWindow.document.addEventListener('readystatechange', (event) => {
         if (event.target.readyState === "complete") {
             myWindow.print();
             myWindow.close();
         }
-    });
-    /* setTimeout(() => {
+    }); */
+    setTimeout(() => {
         myWindow.print();
         myWindow.close();
-    }, 500); */
+    }, 500);
 });
 /* TODO
  - Add Excel Btn EventListeners
