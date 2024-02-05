@@ -1,3 +1,4 @@
+// Update Table Data
 let globalData = {};
 function handleResponse(response) {
     const rData = response?.data;
@@ -124,7 +125,7 @@ function handleResponse(response) {
     tableElem.style.display = '';
 }
 
-
+// Read Page Data
 function sendRequest() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
@@ -175,8 +176,10 @@ function sendRequest() {
         }
     });
 }
+// AutoUpdate Table
 setInterval(sendRequest, 250);
 
+// Generate NavBar
 (() => {
     for (let i = 0; i < 10; i++) {
         const yearBtn = document.createElement("button");
