@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         const startDate = startDateElem.value;
         const endDate = endDateElem.value;
 
-        if (startDate === request.data.startDate && endDate === request.data.endDate) {
+        if (request.data.startDate === startDate && request.data.endDate === endDate) {
             // Get Data
 
             const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report").children[0].children[0].children[0].children;

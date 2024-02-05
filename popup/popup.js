@@ -14,6 +14,14 @@ function handleResponse(response) {
         warningElem.style.display = '';
         return;
     }
+    // Wrong WebSite
+    if (response === 'wrong-site') {
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'WebSite inválido.';
+        warningElem.style.display = '';
+        return;
+    }
     // Error
     if (!rData) {
         totalElem.innerText = '0000';
@@ -160,7 +168,11 @@ function sendRequest() {
 
         // Send Message
         const activeTab = tabs[0];
-        chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);
+        if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
+            chrome.tabs.sendMessage(activeTab.id, { "data": data }, handleResponse);
+        } else {
+            handleResponse("wrong-site");
+        }
     });
 }
 setInterval(sendRequest, 250);
