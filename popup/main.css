@@ -16,6 +16,17 @@ main {
     color: #104070;
 }
 
+#btn-container div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#btn-container div a img {
+    height: 2.5em;
+    width: 2.5em;
+}
+
 #content-table {
     overflow: hidden;
     width: 100%;

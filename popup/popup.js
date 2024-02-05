@@ -6,6 +6,7 @@ function handleResponse(response) {
     const warningElem = document.getElementById('content-warning');
     const tableElem = document.getElementById('content-table');
     const tbodyElem = document.getElementById('table-body');
+    const titleElem = document.querySelector('title');
 
     // No data
     if (response === 'no-data') {
@@ -13,6 +14,7 @@ function handleResponse(response) {
         tableElem.style.display = 'none';
         warningElem.innerText = 'Não existem exames para esta data.';
         warningElem.style.display = '';
+        globalData = {};
         return;
     }
     // Wrong WebSite
@@ -21,6 +23,7 @@ function handleResponse(response) {
         tableElem.style.display = 'none';
         warningElem.innerText = 'WebSite inválido.';
         warningElem.style.display = '';
+        globalData = {};
         return;
     }
     // Error
@@ -29,6 +32,7 @@ function handleResponse(response) {
         tableElem.style.display = 'none';
         warningElem.innerText = 'Loading...';
         warningElem.style.display = '';
+        globalData = {};
         return;
     }
 
@@ -138,6 +142,14 @@ function handleResponse(response) {
     totalElem.innerText = total;
     warningElem.style.display = 'none';
     tableElem.style.display = '';
+
+    // Update Title
+    const year = document.getElementsByClassName('year-btn-active')[0].innerText;
+    let months = [];
+    Array(...document.getElementsByClassName('month-btn-active')).forEach((monthElem) => {
+        months.push(monthElem.innerText);
+    });
+    titleElem.innerText = `Extrato - ${year} - ${months.join(" ")}`;
 }
 
 // Read Page Data
@@ -254,7 +266,7 @@ setInterval(sendRequest, 250);
             document.querySelectorAll(".month-btn").forEach((btn) => {
                 btn.addEventListener("click", (event) => {
                     const thisBtn = event.target;
-                    
+
                     // If month not active
                     if (thisBtn.classList.length == 1) {
                         const activeMonths = Array(...document.getElementsByClassName("month-btn-active"));
@@ -278,7 +290,7 @@ setInterval(sendRequest, 250);
                         ((thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
                             !(thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false)) ||
                         (!(thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
-                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false)) 
+                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false))
                     ) {
                         thisBtn.classList.remove("month-btn-active");
                         sendRequest();
@@ -292,3 +304,21 @@ setInterval(sendRequest, 250);
     // Dispatch click on first year
     document.querySelector(".year-btn").dispatchEvent(new Event("click"));
 })();
+
+// Add Buttons EventListeners
+document.getElementById('pdf-btn').addEventListener('click', async (event) => {
+    event.preventDefault();
+    if (JSON.stringify(globalData) === JSON.stringify({})) { return; }
+    let myWindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    myWindow.document.write('<html>');
+    myWindow.document.write(document.querySelector("html").innerHTML);
+    myWindow.document.write('</html>');
+
+    myWindow.document.close(); // necessary for IE >= 10
+    myWindow.focus(); // necessary for IE >= 10*/
+    setTimeout(() => {
+        myWindow.print();
+        myWindow.close();
+    }, 500);
+});
