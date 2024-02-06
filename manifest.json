@@ -18,7 +18,7 @@
                 "https://cwm.trofasaude.com/*"
             ],
             "js": [
-                "innerScript.js"
+                "inPage.js"
             ]
         },
         {

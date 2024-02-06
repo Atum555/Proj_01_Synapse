@@ -1,10 +1,25 @@
 header {
     padding: 0.5em 2em;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+#deselect-icon {
+    background-color: white;
+    color: white;
+    border: none;
+}
+#deselect-icon img {
+    color: blue;
+    width: 3em;
+    height: 3em;
 }
 
 #date-selector {
     display: flex;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .year-container {
@@ -12,7 +27,6 @@ header {
     border-bottom: 2px solid var(--active-background-color);
     padding-inline: 1em;
 
-    overflow-x: clip;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

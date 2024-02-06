@@ -9,7 +9,6 @@
         const monthContainer = document.createElement('section');
         navSubContainer.replaceChildren(yearContainer, monthContainer);
         // Style Containers
-        navSubContainer.classList.add('nav-sub-container');
         yearContainer.classList.add('year-container');
         monthContainer.classList.add('month-container');
 
@@ -26,11 +25,13 @@
 
         // Generate Months Buttons
         const numberToMonth = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        const numberToMonthFull = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         const maxMonth = i == 0 ? date.getMonth() + 1 : 12;
         for (let j = 1; j <= maxMonth; j++) {
             const monthBtn = document.createElement("button");
             monthBtn.classList.add("month-btn");
             monthBtn.innerText = numberToMonth[j - 1];
+            monthBtn.title = `Selecionar ${numberToMonthFull[j - 1]}`;
             monthBtn.id = `mBtn-${year}-${j}`;
             monthBtn.addEventListener('click', function (event) {
                 const btn = event.target;
@@ -43,85 +44,11 @@
         nav.appendChild(navSubContainer);
     }
 
-    /*
-    // Add event listeners to years buttons
-    document.querySelectorAll(".year-btn").forEach((btn) => {
-        btn.addEventListener("click", (event) => {
-            // Remove Old Active
-            document.querySelectorAll(".year-btn").forEach((btn) => {
-                btn.classList.remove("year-btn-active");
-            });
-            // Set Active
-            event.target.classList.add("year-btn-active");
-
-            // Create months buttons
-            const numberToMonth = {
-                1: "Jan",
-                2: "Fev",
-                3: "Mar",
-                4: "Abr",
-                5: "Mai",
-                6: "Jun",
-                7: "Jul",
-                8: "Ago",
-                9: "Set",
-                10: "Out",
-                11: "Nov",
-                12: "Dez"
-            }
-            const date = new Date();
-            const currentYear = date.getFullYear();
-            const currentMonth = date.getMonth();
-            const maxMonth = Number(btn.innerText) == currentYear ? currentMonth + 1 : 12;
-            let months = [];
-            for (let i = maxMonth; i >= 1; i--) {
-                const monthBtn = document.createElement("button");
-                monthBtn.classList.add("month-btn");
-                monthBtn.innerText = numberToMonth[i];
-                months.push(monthBtn);
-            }
-            document.getElementById("month-selector").replaceChildren(...months);
-
-            // Add event listeners to months buttons
-            document.querySelectorAll(".month-btn").forEach((btn) => {
-                btn.addEventListener("click", (event) => {
-                    const thisBtn = event.target;
-
-                    // If month not active
-                    if (thisBtn.classList.length == 1) {
-                        const activeMonths = Array(...document.getElementsByClassName("month-btn-active"));
-
-                        // If thisMonth not next to an active month remove all active months 
-                        if (
-                            (thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 1 : true) &&
-                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 1 : true)
-                        ) {
-                            activeMonths.forEach((btn) => {
-                                btn.classList.remove("month-btn-active");
-                            });
-                        }
-                        // Set this month to active
-                        thisBtn.classList.add("month-btn-active");
-                        updateTable();
-                        return;
-                    }
-                    // If month active and one of the siblings active and the other not
-                    if (
-                        ((thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
-                            !(thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false)) ||
-                        (!(thisBtn.nextSibling ? thisBtn.nextSibling.classList.length == 2 : false) &&
-                            (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false))
-                    ) {
-                        thisBtn.classList.remove("month-btn-active");
-                        updateTable();
-                    }
-                });
-            });
-            // Dispatch click on first month
-            document.querySelector(".month-btn").dispatchEvent(new Event("click"));
+    const deselectBtn = document.getElementById('deselect-icon');
+    deselectBtn.addEventListener('click', () => {
+        const monthBtnList = Array(...document.getElementsByClassName('month-btn-active'));
+        monthBtnList.forEach((btn) => {
+            btn.classList.remove('month-btn-active');
         });
     });
-    // Dispatch click on first year
-    document.querySelector(".year-btn").dispatchEvent(new Event("click"));
-    */
 })();

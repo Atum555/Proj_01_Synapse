@@ -49,6 +49,13 @@
     <body>
         <header>
             <nav id="date-selector"></nav>
+            <button
+                id="deselect-icon"
+                title="Limpar meses selecionados.">
+                <img
+                    src="images/deselect-icon.png"
+                    alt="" />
+            </button>
         </header>
         <main>
             <div id="btn-container">
@@ -57,17 +64,23 @@
                     <span id="table-total">0000</span>€
                 </h1>
                 <div>
-                    <a id="pdf-btn"
+                    <a
+                        id="pdf-btn"
+                        title="Imprimir como PDF"
                         ><img
                             src="images/pdf-icon.png"
                             alt=""
                     /></a>
-                    <a id="excel-btn"
+                    <a
+                        id="excel-btn"
+                        title="Baixar como Excel"
                         ><img
                             src="images/excel-icon.png"
                             alt=""
                     /></a>
-                    <a href="settings.html"
+                    <a
+                        href="settings.html"
+                        title="Alterar Preços"
                         ><img
                             src="images/settings-icon.png"
                             alt=""
