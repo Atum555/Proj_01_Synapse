@@ -16,5 +16,4 @@ setInterval(askData, 1000);
 // Receive data
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log(message);
-    sendResponse({ "hey look me too!": message['hey I sent data'] });
 });
