@@ -209,10 +209,8 @@ function updateTable() {
         }
     });
 }
-// AutoUpdate Table
-setInterval(updateTable, 250);
 
-// Generate NavBar
+/* // Generate NavBar
 (() => {
     for (let i = 0; i < 10; i++) {
         const yearBtn = document.createElement("button");
@@ -303,36 +301,4 @@ setInterval(updateTable, 250);
     });
     // Dispatch click on first year
     document.querySelector(".year-btn").dispatchEvent(new Event("click"));
-})();
-
-// Add Buttons EventListeners
-document.getElementById('pdf-btn').addEventListener('click', async (event) => {
-    event.preventDefault();
-    if (JSON.stringify(globalData) === JSON.stringify({})) { return; }
-    let myWindow = window.open('', 'PRINT', 'height=400,width=600');
-
-    myWindow.document.write('<html><head>');
-    myWindow.document.write(document.querySelector("head").innerHTML);
-    myWindow.document.write('</head><body><header>');
-    myWindow.document.write(document.querySelector("header").innerHTML);
-    myWindow.document.write('</header><main>');
-    myWindow.document.write(document.querySelector("main").innerHTML);
-    myWindow.document.write('</main>');
-    myWindow.document.write('</body></html>');
-
-    myWindow.document.close(); // necessary for IE >= 10
-    myWindow.focus(); // necessary for IE >= 10*/
-/*     myWindow.document.addEventListener('readystatechange', (event) => {
-        if (event.target.readyState === "complete") {
-            myWindow.print();
-            myWindow.close();
-        }
-    }); */
-    setTimeout(() => {
-        myWindow.print();
-        myWindow.close();
-    }, 500);
-});
-/* TODO
- - Add Excel Btn EventListeners
-*/
+})(); */

@@ -1,11 +1,4 @@
-let extensionGlobalData = {
-    'selected': [],
-    'state': {
-        'complete': false,
-        'searchIntervals': []
-    }
-}
-
+// Auxiliary Functions
 function getMonthsSelected() {
     const selected = [];
     Array(...document.getElementsByClassName('month-btn-active')).forEach((monthElem) => {
@@ -95,7 +88,6 @@ function calculateSearchIntervals() {
             const monthMapperEnd = ['31/01/', (Number(year) % 4 ? '28/02/' : '29/02/'), '31/03/', '30/04/', '31/05/', '30/06/', '31/07/', '31/08/', '30/09/', '31/10/', '30/11/', '31/12/'];
             const startDate = monthMapperStart[range[0][0] - 1] + String(range[0][1]);
             const endDate = monthMapperEnd[range[1][0] - 1] + String(range[1][1]);
-            console.log(startDate, endDate);
             searchIntervals.push({
                 'complete': false,
                 'startDate': startDate,

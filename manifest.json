@@ -23,7 +23,8 @@
         },
         {
             "matches": [
-                "https://cwm.trofasaude.com/*"
+                "https://cwm.trofasaude.com/*",
+                "https://atumm.pt/*"
             ],
             "js": [
                 "contentScript.js"
