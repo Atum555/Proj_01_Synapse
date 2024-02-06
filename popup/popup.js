@@ -153,7 +153,7 @@ function handleResponse(response) {
 }
 
 // Read Page Data
-function sendRequest() {
+function updateTable() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const year = document.getElementsByClassName('year-btn-active')[0].innerText;
         let months = [];
@@ -210,7 +210,7 @@ function sendRequest() {
     });
 }
 // AutoUpdate Table
-setInterval(sendRequest, 250);
+setInterval(updateTable, 250);
 
 // Generate NavBar
 (() => {
@@ -282,7 +282,7 @@ setInterval(sendRequest, 250);
                         }
                         // Set this month to active
                         thisBtn.classList.add("month-btn-active");
-                        sendRequest();
+                        updateTable();
                         return;
                     }
                     // If month active and one of the siblings active and the other not
@@ -293,7 +293,7 @@ setInterval(sendRequest, 250);
                             (thisBtn.previousSibling ? thisBtn.previousSibling.classList.length == 2 : false))
                     ) {
                         thisBtn.classList.remove("month-btn-active");
-                        sendRequest();
+                        updateTable();
                     }
                 });
             });

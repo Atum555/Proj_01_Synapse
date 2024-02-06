@@ -23,6 +23,12 @@
                 -webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
                 color-adjust: exact !important; /* Firefox 48 – 96 */
                 print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
+
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            *::-webkit-scrollbar {
+                display: none;
             }
 
             body {
@@ -42,8 +48,7 @@
 
     <body>
         <header>
-            <nav id="year-selector"></nav>
-            <section id="month-selector"></section>
+            <nav id="date-selector"></nav>
         </header>
         <main>
             <div id="btn-container">
@@ -90,6 +95,7 @@
                 <tbody id="table-body"></tbody>
             </table>
         </main>
-        <script src="popup.js"></script>
+        <script src="generateNav.js"></script>
+        <script src="newPopup.js"></script>
     </body>
 </html>

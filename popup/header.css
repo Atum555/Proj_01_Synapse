@@ -2,7 +2,12 @@ header {
     padding: 0.5em 2em;
 }
 
-nav {
+#date-selector {
+    display: flex;
+    overflow: scroll;
+}
+
+.year-container {
     margin-bottom: 0.5em;
     border-bottom: 2px solid var(--active-background-color);
     padding-inline: 1em;
@@ -19,40 +24,22 @@ nav {
     font-family: 'Roboto', sans-serif;
     font-size: 0.8em;
     font-weight: 500;
-    color: var(--text-color);
+    color: white;
+    background-color: var(--active-background-color);
+
 
     border: none;
     border-radius: 0.4em 0.4em 0 0;
     padding: 0.4em 1em 0.1em;
-    background-color: white;
-
-    transition: 0.1s ease;
-}
-
-.year-btn:hover,
-.year-btn:focus-visible {
-    color: var(--text-hover-color);
-    background-color: var(--hover-background-color);
-
-    padding: 0.2em 1em;
-    border-radius: 0.4em;
-    transform: scale(1.15);
-}
-
-.year-btn-active,
-.year-btn-active:hover,
-.year-btn-active:focus-visible {
-    color: white;
-    background-color: var(--active-background-color);
 }
 
 
-#month-selector {
+.month-container {
     width: 100%;
     padding-inline: 1em;
 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: start;
     gap: 0.4em;
