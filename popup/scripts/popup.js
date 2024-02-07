@@ -3,8 +3,22 @@ let extensionGlobalData = {
     'state': {
         'complete': false,
         'searchIntervals': []
-    }
+    },
+    'data': []
 }
+
+// Update Selected Months
+setInterval(function () {
+    if (getMonthsSelected()) {
+        askData()
+    }
+}, 250)
+
+
+// Receive data
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    console.log(message);
+});
 
 // Send Message Asking for Data
 function askData() {
@@ -39,10 +53,4 @@ function askData() {
         }
     });
 }
-setInterval(askData, 1000);
-
-
-// Receive data
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    console.log(message);
-});
+setInterval(askData, 300);

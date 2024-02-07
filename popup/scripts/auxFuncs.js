@@ -26,6 +26,7 @@ function getMonthsSelected() {
         extensionGlobalData.selected = selected;
         extensionGlobalData.state.complete = false;
         extensionGlobalData.state.searchIntervals = [];
+        extensionGlobalData.data = [];
         calculateSearchIntervals();
         return true;
     }
