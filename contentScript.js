@@ -1,8 +1,5 @@
-console.log('injected');
-
 // Handle Messages
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log('request received');
     if (request === "send-data") {
         setTimeout(sendData, 100);
     }
