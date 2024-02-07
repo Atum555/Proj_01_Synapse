@@ -5,13 +5,17 @@ header {
     gap: 1em;
 }
 
+header img {
+    width: 4em;
+    height: 4em;
+}
+
 #deselect-icon {
     background-color: white;
     color: white;
     border: none;
 }
 #deselect-icon img {
-    color: blue;
     width: 3em;
     height: 3em;
 }
