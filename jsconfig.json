@@ -8,12 +8,8 @@
         "strictNullChecks": true,
         "strictFunctionTypes": true
     },
-    "exclude": [
-        "node_modules"
-    ],
+    "exclude": ["node_modules"],
     "typeAcquisition": {
-        "include": [
-            "chrome"
-        ]
+        "include": ["chrome"]
     }
 }
