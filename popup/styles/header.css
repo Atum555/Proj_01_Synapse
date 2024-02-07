@@ -20,7 +20,62 @@ header img {
     height: 3em;
 }
 
+#nav-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+#nav-left-btn,
+#nav-right-btn {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 0.5em;
+    
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    transition: all 0.15s ease;
+}
+#nav-left-btn {
+    left: -2em;
+}
+#nav-right-btn {
+    right: -2em;
+}
+#nav-left-btn-container {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    height: 80%;
+    width: 2em;
+}
+#nav-right-btn-container {
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    height: 80%;
+    width: 2em;
+}
+#nav-left-btn-container:hover #nav-left-btn {
+    left: 0;
+}
+#nav-right-btn-container:hover #nav-right-btn {
+    right: 0;
+}
+
 #date-selector {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+   
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;

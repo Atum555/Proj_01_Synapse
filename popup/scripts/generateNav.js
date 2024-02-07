@@ -42,6 +42,7 @@
         nav.appendChild(navSubContainer);
     }
 
+    // Deselect Btn
     const deselectBtn = document.getElementById('deselect-icon');
     deselectBtn.addEventListener('click', () => {
         const monthBtnList = Array(...document.getElementsByClassName('month-btn-active'));
@@ -49,4 +50,17 @@
             btn.classList.remove('month-btn-active');
         });
     });
+
+    // Scroll Btn's
+    const scrollLeft = document.getElementById('nav-left-btn');
+    const scrollRight = document.getElementById('nav-right-btn');
+
+    scrollLeft.addEventListener('click', (event) => {
+        const nav = document.getElementById('date-selector');
+        nav.scrollBy(-nav.clientWidth * 0.8, 0);
+    })
+    scrollRight.addEventListener('click', (event) => {
+        const nav = document.getElementById('date-selector');
+        nav.scrollBy(nav.clientWidth * 0.8, 0);
+    })
 })();
