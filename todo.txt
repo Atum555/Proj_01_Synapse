@@ -1,20 +1,12 @@
 TODO
 - Fix search / search multiple pages
 
-    // Page Number / Registe count
-    document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length-1].children[0].innerText
-    - 'A ver página 2 num total de 176 registos'
-
-    // Next Page
-    document.getElementById('ctl00_MainContent_lkReportNext').click()
-
-
 - Add to Seguros Table
-- Add Logotipo
 - Export as excel
 - Settings
 - Export / Import values
 
 Done
+- Add Logotipo
 - Select multiple months
 - Export as pdf

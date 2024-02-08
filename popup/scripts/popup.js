@@ -12,7 +12,7 @@ setInterval(function () {
     if (getMonthsSelected()) {
         askData()
     }
-}, 250)
+}, 250);
 
 
 // Receive data
