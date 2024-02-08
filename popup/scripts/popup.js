@@ -4,7 +4,8 @@ let extensionGlobalData = {
         'complete': false,
         'searchIntervals': []
     },
-    'records': []
+    'records': [],
+    'data': []
 }
 
 // Update Selected Months

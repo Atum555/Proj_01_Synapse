@@ -111,16 +111,22 @@ function mountTable() {
     const tbodyElem = document.getElementById('table-body');
 
     // Data Population
-    let data = {};
+    let data = [];
     extensionGlobalData.records.forEach((record) => {
         // Exam Type
         const exam_Type = record.exam_Type;
         const seguro = record.seguro;
 
         // Create exam_Type if non existent
-        if (!data.hasOwnProperty(exam_Type)) {
-            data[exam_Type] = { 'name': exam_Type, 'count': 0, 'subTotalOuter': 0, 'exams': {} };
+        if (!data.some((e) => { e.name === exam_Type })) {
+            data.push({
+                'name': exam_Type,
+                'exams': [],
+                'count': 0,
+                'subTotalOuter': 0
+            });
         }
+        const d_Exam_Type = data.find((e) => { e.name === exam_Type });
 
         // Exams
         record.exams.forEach((exam) => {
@@ -129,66 +135,74 @@ function mountTable() {
             const seguroValue = 0;
             const value = seguroValue | defaultValue;
 
-            // TODO IMPORTANT Keep Checking Mount Table Logic
             
             // Create exam if non existent
-            if (!data[exam_Type].exams.hasOwnProperty(exam)) {
-                data[exam_Type].exams[exam] = {
+            if (!d_Exam_Type.exams.some((e) => { e.name == exam })) {
+                d_Exam_Type.exams.push({
                     'name': exam,
                     'count': 0,
-                    'value': defaultValue,
                     'subTotalInner': 0,
-                    'seguros': {}
-                };
+                    'value': defaultValue,
+                    'seguros': []
+                });
             }
+            const d_Exam = d_Exam_Type.find((e) => { e.name === exam });
+            
+            
             // Create seguro if non existent
-            if (!data[exam_Type].exams[exam].hasOwnProperty(seguro)) {
-                data[exam_Type].exams[exam][seguro] = {
+            if (!d_Exam.seguros.some((e) => { e.name === seguro })) {
+                d_Exam.seguros.push({
                     'name': seguro,
                     'count': 0,
                     'value': seguroValue,
                     'subTotalSeguro': 0
-                }
+                });
             }
+            const d_Seguro = d_Exam.find((e) => {e.name === seguro});
+            
             // Increase exam_Type count
+            // Increase subTotalOuter
             // Increase exam count
+            // Increase subTotalInner
             // Increase seguro count
             // Increase subTotalSeguro
-            // Increase subTotalInner
-            // Increase subTotalOuter
-            data[exam_Type].count += 1;
-            data[exam_Type].exams[exam].count += 1;
-            data[exam_Type].exams[exam][seguro].count += 1;
-            data[exam_Type].exams[exam][seguro].subTotalSeguro += value;
-            data[exam_Type].exams[exam].subTotalInner += value;
-            data[exam_Type].subTotalOuter += value;
+            d_Exam_Type.count += 1;
+            d_Exam_Type.subTotalOuter += value;
+            d_Exam.count += 1;
+            d_Exam.subTotalInner += value;
+            d_Seguro.count += 1;
+            d_Seguro.subTotalSeguro += value;
         });
     });
-
+    
     // Don't update DOM if data didn't change
-    if (JSON.stringify(globalData) === JSON.stringify(data)) { return; }
-    globalData = data;
+    if (JSON.stringify(extensionGlobalData.data) === JSON.stringify(data)) { return; }
+    extensionGlobalData.data = data;
+    
 
     // Rows list && Total value
-    let rows = [];
     let total = 0;
-    for (const exam_Type in data) {
-        const exams = data[exam_Type].exams;
-
+    let rows = [];
+    data.forEach((exam_Type) => {
+        const exams = exam_Type.exams;
+        
         // First row of this exam_Type
         let first = true;
-
+        
         // Update total
-        total += data[exam_Type].subTotalOuter;
+        total += exam_Type.subTotalOuter;
+        
+        // TODO IMPORTANT Keep Checking Mount Table Logic
 
-        for (const exam in exams) {
-            const nameElem = document.createElement('td');
-            const countElem = document.createElement('td');
+        exam_Type.exams.forEach((exam) => {
+            const examNameElem = document.createElement('td');
+            const countExamElem = document.createElement('td');
             const subTotalInnerElem = document.createElement('td');
 
-            nameElem.innerText = exams[exam].name;
-            countElem.innerText = exams[exam].count;
-            subTotalInnerElem.innerText = `${exams[exam].subTotalInner}€`;
+
+            nameElem.innerText = exam.name;
+            countElem.innerText = exam.count;
+            subTotalInnerElem.innerText = `${exam.subTotalInner}€`;
 
             // First row of this exam_Type
             if (first) {
@@ -214,8 +228,8 @@ function mountTable() {
                 tr.replaceChildren(nameElem, countElem, subTotalInnerElem);
                 rows.push(tr);
             }
-        }
-    }
+        });
+    });
     tbodyElem.replaceChildren(...rows);
     totalElem.innerText = total;
     warningElem.style.display = 'none';
@@ -228,7 +242,7 @@ function mountTable() {
         months.push(monthElem.innerText);
     });
     titleElem.innerText = `Extrato - ${year} - ${months.join(" ")}`;
-    
+
     // TODO Make mount table Logic
     return;
 }
@@ -236,7 +250,7 @@ function mountTable() {
 function whatToAskNext(previous) {
     // Update
     updateSelection();
-    
+
     const message = {};
     // Nothing
     if (extensionGlobalData.state.complete || extensionGlobalData.state.searchIntervals.length === 0) {
