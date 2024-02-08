@@ -198,8 +198,6 @@ function updateTable() {
             'year': year
         }
 
-        // ! console!
-        console.log(data);
         // Send Message
         const activeTab = tabs[0];
         if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {

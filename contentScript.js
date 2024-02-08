@@ -17,13 +17,14 @@ function sendData() {
     message['endDate'] = endDate;
 
     // Data
-    message['data'] = [];
+    message['records'] = [];
     const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report")?.children[0].children[0].children[0].children;
 
     // Check if no data is present on the page
     if (rows === undefined) {
         message['error'] = 'no-data';
         chrome.runtime.sendMessage(message, handleResponse);
+        return;
     }
 
     for (let i = 0; i < rows.length; i++) {
@@ -43,15 +44,18 @@ function sendData() {
 
         // Date
         dataPoint.date = new Date(rows[i].children[9].innerText.split(" ")[0].trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
-        message.data.push(dataPoint);
+        message.records.push(dataPoint);
     }
 
     // Exams Total
     const footNote = document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length - 1].children[0].innerText;
     // TODO Parse foot note.    
+    message['page'] = 2;
+    message['totalRecordCount'] = 3;
 
     // Next Page Button
     // TODO Check whether or not Next Page Button is available
+    message['nextBtn'] = true;
 
     // Send Message
     chrome.runtime.sendMessage(message, handleResponse);
@@ -73,7 +77,7 @@ function handleResponse(response) {
         // Send Search Request to Page
         window.postMessage({
             'direction': 'from-content-script',
-            'message': 'search'
+            'request': 'search'
         });
     }
     if (response.request === 'next-page') {
