@@ -104,13 +104,15 @@ function calculateSearchIntervals() {
 }
 
 function mountTable() {
-    const titleElem = document.querySelector('title');
+    // TODO Check if table mount works
+    
+    const titleElem = document.querySelector('title');    
     const totalElem = document.getElementById('table-total');
     const warningElem = document.getElementById('content-warning');
     const tableElem = document.getElementById('content-table');
     const tbodyElem = document.getElementById('table-body');
 
-    // Data Population
+    // Parse Records
     let data = [];
     extensionGlobalData.records.forEach((record) => {
         // Exam Type
@@ -123,7 +125,7 @@ function mountTable() {
                 'name': exam_Type,
                 'exams': [],
                 'count': 0,
-                'subTotalOuter': 0
+                'total': 0
             });
         }
         const d_Exam_Type = data.find((e) => { e.name === exam_Type });
@@ -135,31 +137,31 @@ function mountTable() {
             const seguroValue = 0;
             const value = seguroValue | defaultValue;
 
-            
+
             // Create exam if non existent
             if (!d_Exam_Type.exams.some((e) => { e.name == exam })) {
                 d_Exam_Type.exams.push({
                     'name': exam,
                     'count': 0,
-                    'subTotalInner': 0,
+                    'total': 0,
                     'value': defaultValue,
                     'seguros': []
                 });
             }
             const d_Exam = d_Exam_Type.find((e) => { e.name === exam });
-            
-            
+
+
             // Create seguro if non existent
             if (!d_Exam.seguros.some((e) => { e.name === seguro })) {
                 d_Exam.seguros.push({
                     'name': seguro,
                     'count': 0,
                     'value': seguroValue,
-                    'subTotalSeguro': 0
+                    'total': 0
                 });
             }
-            const d_Seguro = d_Exam.find((e) => {e.name === seguro});
-            
+            const d_Seguro = d_Exam.find((e) => { e.name === seguro });
+
             // Increase exam_Type count
             // Increase subTotalOuter
             // Increase exam count
@@ -167,83 +169,121 @@ function mountTable() {
             // Increase seguro count
             // Increase subTotalSeguro
             d_Exam_Type.count += 1;
-            d_Exam_Type.subTotalOuter += value;
+            d_Exam_Type.total += value;
             d_Exam.count += 1;
-            d_Exam.subTotalInner += value;
+            d_Exam.total += value;
             d_Seguro.count += 1;
-            d_Seguro.subTotalSeguro += value;
+            d_Seguro.total += value;
         });
     });
-    
+
     // Don't update DOM if data didn't change
     if (JSON.stringify(extensionGlobalData.data) === JSON.stringify(data)) { return; }
     extensionGlobalData.data = data;
-    
+
 
     // Rows list && Total value
     let total = 0;
-    let rows = [];
+    let tableRows = [];
     data.forEach((exam_Type) => {
-        const exams = exam_Type.exams;
-        
         // First row of this exam_Type
-        let first = true;
-        
+        let examTypeFirst = true;
+
         // Update total
-        total += exam_Type.subTotalOuter;
-        
-        // TODO IMPORTANT Keep Checking Mount Table Logic
+        total += exam_Type.total;
+
+        // Exam_Type Specific Elements
+        const examTypeRowElem = document.createElement('tr');
+        const examTypeNameElem = document.createElement('td');
+        const examTypeTotalElem = document.createElement('td');
+
+        tableRows.push(examTypeRowElem);
+        examTypeTotalElem.innerHTML = `${exam_Type.count}<br>${exam_Type.total}<span>€</span>`;
+        examTypeNameElem.innerText = exam_Type.name;
+
+        // Init RowSpan
+        examTypeNameElem.rowSpan = 0;
+        examTypeTotalElem.rowSpan = 0;
 
         exam_Type.exams.forEach((exam) => {
+            // First row of this exam
+            let examFirst = true;
+
+            // Exam Specific Elements
             const examNameElem = document.createElement('td');
-            const countExamElem = document.createElement('td');
-            const subTotalInnerElem = document.createElement('td');
+            const examCountElem = document.createElement('td');
+            const examTotalElem = document.createElement('td');
 
+            examNameElem.innerText = exam.name;
+            examCountElem.innerText = exam.count;
+            examTotalElem.innerText = `${exam.total}€`;
+            examNameElem.rowSpan = exam.seguros.length;
+            examCountElem.rowSpan = exam.seguros.length;
+            examTotalElem.rowSpan = exam.seguros.length;
 
-            nameElem.innerText = exam.name;
-            countElem.innerText = exam.count;
-            subTotalInnerElem.innerText = `${exam.subTotalInner}€`;
+            // Increase ExamType RowSpan Count
+            examTypeNameElem.rowSpan += exam.seguros.length;
+            examTypeTotalElem.rowSpan += exam.seguros.length;
 
-            // First row of this exam_Type
-            if (first) {
-                first = false;
+            exam.seguros.forEach((seguro) => {
+                const seguroNameElem = document.createElement('td');
+                const seguroCountElem = document.createElement('td');
+                const seguroTotalElem = document.createElement('td');
 
-                const mainRowElem = document.createElement('tr');
-                const subTotalOuterElem = document.createElement('td');
-                const mainNameElem = document.createElement('td');
+                seguroNameElem.innerText = seguro.name;
+                seguroCountElem.innerHTML = seguro.count;
+                seguroTotalElem.innerText = seguro.total;
 
-                subTotalOuterElem.innerHTML =
-                    `${data[exam_Type].count}<br>${data[exam_Type].subTotalOuter}<span>€</span>`;
+                // First row of this exam_Type
+                if (examTypeFirst) {
+                    examTypeFirst = false;
+                    examFirst = false;
+                    examTypeRowElem.replaceChildren(
+                        examTypeTotalElem, examTypeNameElem,
+                        examNameElem, examCountElem, examTotalElem,
+                        seguroNameElem, seguroCountElem, seguroTotalElem
+                    );
+                    return;
+                }
 
-                subTotalOuterElem.rowSpan = Object.keys(exams).length;
+                const rowElem = document.createElement('tr');
+                tableRows.push(rowElem);
 
-                mainNameElem.innerText = data[exam_Type].name;
-                mainNameElem.rowSpan = Object.keys(exams).length;
-                mainRowElem.replaceChildren(subTotalOuterElem, mainNameElem, nameElem, countElem, subTotalInnerElem);
-                rows.push(mainRowElem);
-            }
-            // Other rows of this exam_Type
-            else {
-                const tr = document.createElement('tr');
-                tr.replaceChildren(nameElem, countElem, subTotalInnerElem);
-                rows.push(tr);
-            }
+                // First row of this exam
+                if (examFirst) {
+                    rowElem.replaceChildren(
+                        examNameElem, examCountElem, examTotalElem,
+                        seguroNameElem, seguroCountElem, seguroTotalElem
+                    );
+                    return;
+                }
+
+                rowElem.replaceChildren(
+                    seguroNameElem, seguroCountElem, seguroTotalElem
+                );
+            });
         });
     });
+
+    // Update Table
     tbodyElem.replaceChildren(...rows);
     totalElem.innerText = total;
     warningElem.style.display = 'none';
     tableElem.style.display = '';
 
     // Update Title
-    const year = document.getElementsByClassName('year-btn-active')[0].innerText;
-    let months = [];
-    Array(...document.getElementsByClassName('month-btn-active')).forEach((monthElem) => {
-        months.push(monthElem.innerText);
-    });
-    titleElem.innerText = `Extrato - ${year} - ${months.join(" ")}`;
+    titleElem.innerText = "Extrato";
+    extensionGlobalData.selected.forEach((year) => {
+        titleElem.innerText += ` - ${year.year}`;
 
-    // TODO Make mount table Logic
+        const months = JSON.parse(JSON.stringify(year.months) || {});
+        months.sort((a, b) => a - b);
+
+        const numberToMonth = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        months.forEach((month) => {
+            titleElem.innerText += ` ${numberToMonth[month-1]}`;
+        });
+    });
     return;
 }
 
