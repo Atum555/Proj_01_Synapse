@@ -105,8 +105,8 @@ function calculateSearchIntervals() {
 
 function mountTable() {
     // TODO Check if table mount works
-    
-    const titleElem = document.querySelector('title');    
+
+    const titleElem = document.querySelector('title');
     const totalElem = document.getElementById('table-total');
     const warningElem = document.getElementById('content-warning');
     const tableElem = document.getElementById('content-table');
@@ -281,7 +281,7 @@ function mountTable() {
 
         const numberToMonth = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
         months.forEach((month) => {
-            titleElem.innerText += ` ${numberToMonth[month-1]}`;
+            titleElem.innerText += ` ${numberToMonth[month - 1]}`;
         });
     });
     return;
@@ -312,13 +312,11 @@ function whatToAskNext(previous) {
         const interval = extensionGlobalData.state.searchIntervals[i];
 
         if (!interval.complete) {
-            console.log('it got here');
-            console.log(interval);
             message['search'] = true;
             message['startDate'] = interval.startDate;
             message['endDate'] = interval.endDate;
             return message;
         }
-    }    
-    // TODO Make What to ask next Logic
+    }
+    // TODO Check if logic Works
 }

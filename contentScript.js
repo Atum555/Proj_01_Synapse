@@ -2,7 +2,9 @@ let STOP = false;
 
 // Handle Messages
 function handleMessage(request, sender, sendResponse) {
-    if (STOP) { return;}
+    // STOP if Loading Next Page
+    if (STOP) { return; }
+
     if (request === "send-data") {
         sendData();
     }
@@ -12,18 +14,20 @@ chrome.runtime.onMessage.addListener(handleMessage);
 
 // Send Messages
 function sendData() {
-    if (STOP) { return;}
+    // STOP if Loading Next Page
+    if (STOP) { return; }
+
     const message = {};
 
     // Date
-    const startDate = document.getElementById('ctl00_MainContent_txtRptExamDate').value;
-    const endDate = document.getElementById('ctl00_MainContent_txtRptExamEndDate').value;
+    const startDate = document.getElementById('ctl00_MainContent_txtRptExamDate')?.value;
+    const endDate = document.getElementById('ctl00_MainContent_txtRptExamEndDate')?.value;
     message['startDate'] = startDate;
     message['endDate'] = endDate;
 
     // Data
     message['records'] = [];
-    const rows = document.querySelector("#ctl00_MainContent_pnlReports").querySelector(".table-body-report")?.children[0].children[0].children[0].children;
+    const rows = document.querySelector("#ctl00_MainContent_pnlReports")?.querySelector(".table-body-report")?.children[0].children[0].children[0].children;
 
     // Check if no data is present on the page
     if (rows === undefined) {
@@ -67,8 +71,11 @@ function sendData() {
 
 // Handle Response from Message
 function handleResponse(response) {
-    if (STOP) { return;}
+    // STOP if Loading Next Page
+    if (STOP) { return; }
+
     console.log(response);
+
     if (response.request === 'search') {
         // Input Dates
         const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');
@@ -95,6 +102,7 @@ function handleResponse(response) {
 
 // Stop if next page is loading
 window.addEventListener('beforeunload', function (event) {
+    // STOP if Loading Next Page
     stop = true;
     chrome.runtime.onMessage.removeListener(handleMessage);
 });

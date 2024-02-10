@@ -25,12 +25,12 @@ function askData() {
         if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
             chrome.tabs.sendMessage(activeTab.id, request)
                 .catch((error) => {
-                    if (!extensionGlobalData.state.searching){
+                    if (!extensionGlobalData.state.searching) {
                         // Handle Error
                         const totalElem = document.getElementById('table-total');
                         const warningElem = document.getElementById('content-warning');
                         const tableElem = document.getElementById('content-table');
-    
+
                         totalElem.innerText = '0000';
                         tableElem.style.display = 'none';
                         warningElem.innerText = 'Erro.';
@@ -50,24 +50,23 @@ function askData() {
         }
     });
 }
-setInterval(askData, 300);
+setInterval(askData, 15000);
+// TODO Reduce Interval
 
 
 // Receive data
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log(message);
-    let next = whatToAskNext(
-        {
-            'startDate': message.startDate,
-            'endDate': message.endDate
-        }
-    );
+
+    let next = whatToAskNext();
 
     // Nothing to Search
-    if (next.nothing) { mountTable(); }
+    if (next.nothing) { mountTable(); return; }
 
     // No Data
     if (message.error === "no-data") {
+        // Mark as Searching
+        extensionGlobalData.state.searching = true;
         sendResponse({
             'request': 'search',
             'startDate': next.startDate,
@@ -90,22 +89,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
 
     // Update Next
-    next = whatToAskNext(
-        {
-            'startDate': message.startDate,
-            'endDate': message.endDate
-        }
-    );
+    next = whatToAskNext();
 
     // Nothing to Search
-    if (next.nothing) { mountTable(); }
+    if (next.nothing) { mountTable(); return; }
 
     // Mark as Searching
     extensionGlobalData.state.searching = true;
 
     // Search Next Page
     if (next.nextPage) { sendResponse({ 'request': 'next-page' }); }
-    
+
     // Search Next Interval
     sendResponse({
         'request': 'search',
