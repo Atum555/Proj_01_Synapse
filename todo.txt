@@ -1,12 +1,12 @@
 TODO
-- Fix search / search multiple pages
 
-- Add to Seguros Table
 - Export as excel
 - Settings
 - Export / Import values
 
 Done
 - Add Logotipo
+- Add to Seguros Table (Check)
+- Fix search / search multiple pages (Check)
 - Select multiple months
 - Export as pdf

@@ -298,5 +298,13 @@ function whatToAskNext(previous) {
         return message;
     }
 
+    // Incomplete Interval Search Next Page
+    extensionGlobalData.state.searchIntervals.forEach((interval) => {
+        if (interval.records.length !== 0 && !interval.complete) {
+            message['nextPage'] = true;
+            return message;
+        }
+    });
+    
     // TODO Make What to ask next Logic
 }
