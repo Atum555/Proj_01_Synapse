@@ -1,13 +1,18 @@
+let STOP = false;
+
 // Handle Messages
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+function handleMessage(request, sender, sendResponse) {
+    if (STOP) { return;}
     if (request === "send-data") {
-        setTimeout(sendData, 100);
+        sendData();
     }
-});
+}
+chrome.runtime.onMessage.addListener(handleMessage);
 
 
 // Send Messages
 function sendData() {
+    if (STOP) { return;}
     const message = {};
 
     // Date
@@ -48,10 +53,10 @@ function sendData() {
     }
 
     // Exams Total
-    const footNote = document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length - 1].children[0].innerText;
+    const footNote = document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length - 1].children[0].innerText.split(' ');
     // TODO Parse foot note.    
-    message['page'] = 2;
-    message['totalRecordCount'] = 3;
+    message['page'] = footNote[3];
+    message['totalRecordCount'] = footNote[7];
 
     // Next Page Button
     message['nextBtn'] = document.getElementById('ctl00_MainContent_lkReportNext') ? true : false;
@@ -62,8 +67,8 @@ function sendData() {
 
 // Handle Response from Message
 function handleResponse(response) {
+    if (STOP) { return;}
     console.log(response);
-    return;
     if (response.request === 'search') {
         // Input Dates
         const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');
@@ -87,3 +92,9 @@ function handleResponse(response) {
         // If not send request to inPage Script
     }
 }
+
+// Stop if next page is loading
+window.addEventListener('beforeunload', function (event) {
+    stop = true;
+    chrome.runtime.onMessage.removeListener(handleMessage);
+});

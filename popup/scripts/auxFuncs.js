@@ -299,12 +299,26 @@ function whatToAskNext(previous) {
     }
 
     // Incomplete Interval Search Next Page
-    extensionGlobalData.state.searchIntervals.forEach((interval) => {
+    for (let i = 0; i < extensionGlobalData.state.searchIntervals.length; i++) {
+        const interval = extensionGlobalData.state.searchIntervals[i];
+
         if (interval.records.length !== 0 && !interval.complete) {
             message['nextPage'] = true;
             return message;
         }
-    });
-    
+    }
+
+    for (let i = 0; i < extensionGlobalData.state.searchIntervals.length; i++) {
+        const interval = extensionGlobalData.state.searchIntervals[i];
+
+        if (!interval.complete) {
+            console.log('it got here');
+            console.log(interval);
+            message['search'] = true;
+            message['startDate'] = interval.startDate;
+            message['endDate'] = interval.endDate;
+            return message;
+        }
+    }    
     // TODO Make What to ask next Logic
 }

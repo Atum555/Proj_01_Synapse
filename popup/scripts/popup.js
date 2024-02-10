@@ -1,6 +1,7 @@
 let extensionGlobalData = {
     'selected': [],
     'state': {
+        'searching': false,
         'complete': false,
         'searchIntervals': []
     },
@@ -14,10 +15,47 @@ setInterval(function () {
 }, 250);
 
 
+// Send Message Asking for Data
+function askData() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const activeTab = tabs[0];
+        const request = 'send-data';
+
+        // Send If Valid Page
+        if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
+            chrome.tabs.sendMessage(activeTab.id, request)
+                .catch((error) => {
+                    if (!extensionGlobalData.state.searching){
+                        // Handle Error
+                        const totalElem = document.getElementById('table-total');
+                        const warningElem = document.getElementById('content-warning');
+                        const tableElem = document.getElementById('content-table');
+    
+                        totalElem.innerText = '0000';
+                        tableElem.style.display = 'none';
+                        warningElem.innerText = 'Erro.';
+                        warningElem.style.display = '';
+                    }
+                });
+        } else {
+            // Set Invalid Page
+            const totalElem = document.getElementById('table-total');
+            const warningElem = document.getElementById('content-warning');
+            const tableElem = document.getElementById('content-table');
+
+            totalElem.innerText = '0000';
+            tableElem.style.display = 'none';
+            warningElem.innerText = 'WebSite inválido.';
+            warningElem.style.display = '';
+        }
+    });
+}
+setInterval(askData, 300);
+
+
 // Receive data
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log(message);
-
     let next = whatToAskNext(
         {
             'startDate': message.startDate,
@@ -62,8 +100,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     // Nothing to Search
     if (next.nothing) { mountTable(); }
 
+    // Mark as Searching
+    extensionGlobalData.state.searching = true;
+
     // Search Next Page
-    if (message.nextPage) { sendResponse({ 'request': 'next-page' }); }
+    if (next.nextPage) { sendResponse({ 'request': 'next-page' }); }
     
     // Search Next Interval
     sendResponse({
@@ -72,38 +113,3 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         'endDate': next.endDate
     });
 });
-
-// Send Message Asking for Data
-function askData() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        const activeTab = tabs[0];
-        const request = 'send-data';
-
-        // Send If Valid Page
-        if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
-            chrome.tabs.sendMessage(activeTab.id, request)
-                .catch((error) => {
-                    // Handle Error
-                    const totalElem = document.getElementById('table-total');
-                    const warningElem = document.getElementById('content-warning');
-                    const tableElem = document.getElementById('content-table');
-
-                    totalElem.innerText = '0000';
-                    tableElem.style.display = 'none';
-                    warningElem.innerText = 'Erro.';
-                    warningElem.style.display = '';
-                });
-        } else {
-            // Set Invalid Page
-            const totalElem = document.getElementById('table-total');
-            const warningElem = document.getElementById('content-warning');
-            const tableElem = document.getElementById('content-table');
-
-            totalElem.innerText = '0000';
-            tableElem.style.display = 'none';
-            warningElem.innerText = 'WebSite inválido.';
-            warningElem.style.display = '';
-        }
-    });
-}
-setInterval(askData, 300);
