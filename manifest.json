@@ -11,6 +11,11 @@
     "action": {
         "default_popup": "popup/popup.html"
     },
+    "icons": {
+        "1024": "icons/logo-icon-1024.png",
+        "128": "icons/logo-icon-128.png",
+        "48": "icons/logo-icon-48.png"
+    },
     "content_scripts": [
         {
             "world": "MAIN",
