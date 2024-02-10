@@ -54,8 +54,7 @@ function sendData() {
     message['totalRecordCount'] = 3;
 
     // Next Page Button
-    // TODO Check whether or not Next Page Button is available
-    message['nextBtn'] = true;
+    message['nextBtn'] = document.getElementById('ctl00_MainContent_lkReportNext') ? true : false;
 
     // Send Message
     chrome.runtime.sendMessage(message, handleResponse);
@@ -63,6 +62,8 @@ function sendData() {
 
 // Handle Response from Message
 function handleResponse(response) {
+    console.log(response);
+    return;
     if (response.request === 'search') {
         // Input Dates
         const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');
