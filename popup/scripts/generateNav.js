@@ -22,7 +22,8 @@
         yearBtn.addEventListener('click', (event) => {
             Array(...document.getElementsByClassName("month-btn")).forEach((btn) => {
                 if (btn.id.split('-').includes(yearNumber)) {
-                    btn.classList.add("month-btn-ative")
+                    console.log(btn.id.split('-'))
+                    btn.classList.add("month-btn-active");
                 }
             });
         });
