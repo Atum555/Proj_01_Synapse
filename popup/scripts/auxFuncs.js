@@ -93,6 +93,7 @@ function calculateSearchIntervals() {
                 'complete': false,
                 'startDate': startDate,
                 'endDate': endDate,
+                'pages': [],
                 'records': [],
                 'count': 0
             });
@@ -101,6 +102,8 @@ function calculateSearchIntervals() {
         selected.splice(selected.indexOf(yearObj), 1);
     }
     extensionGlobalData.state.searchIntervals = searchIntervals;
+    extensionGlobalData.records = [];
+    extensionGlobalData.data = [];
 }
 
 function mountTable() {
@@ -120,7 +123,7 @@ function mountTable() {
         const seguro = record.seguro;
 
         // Create exam_Type if non existent
-        if (!data.some((e) => { e.name === exam_Type })) {
+        if (!data.some((e) => e.name === exam_Type )) {
             data.push({
                 'name': exam_Type,
                 'exams': [],
@@ -128,7 +131,7 @@ function mountTable() {
                 'total': 0
             });
         }
-        const d_Exam_Type = data.find((e) => { e.name === exam_Type });
+        const d_Exam_Type = data.find((e) => e.name === exam_Type );
 
         // Exams
         record.exams.forEach((exam) => {
@@ -139,7 +142,7 @@ function mountTable() {
 
 
             // Create exam if non existent
-            if (!d_Exam_Type.exams.some((e) => { e.name == exam })) {
+            if (!d_Exam_Type.exams.some((e) => e.name == exam )) {
                 d_Exam_Type.exams.push({
                     'name': exam,
                     'count': 0,
@@ -148,11 +151,11 @@ function mountTable() {
                     'seguros': []
                 });
             }
-            const d_Exam = d_Exam_Type.find((e) => { e.name === exam });
+            const d_Exam = d_Exam_Type.exams.find((e) => e.name === exam );
 
 
             // Create seguro if non existent
-            if (!d_Exam.seguros.some((e) => { e.name === seguro })) {
+            if (!d_Exam.seguros.some((e) =>  e.name === seguro )) {
                 d_Exam.seguros.push({
                     'name': seguro,
                     'count': 0,
@@ -160,7 +163,7 @@ function mountTable() {
                     'total': 0
                 });
             }
-            const d_Seguro = d_Exam.find((e) => { e.name === seguro });
+            const d_Seguro = d_Exam.seguros.find((e) => e.name === seguro );
 
             // Increase exam_Type count
             // Increase subTotalOuter
@@ -198,7 +201,7 @@ function mountTable() {
         const examTypeTotalElem = document.createElement('td');
 
         tableRows.push(examTypeRowElem);
-        examTypeTotalElem.innerHTML = `${exam_Type.count}<br>${exam_Type.total}<span>€</span>`;
+        examTypeTotalElem.innerHTML = `${exam_Type.count}<br>${exam_Type.total}<span class="examTypeEuro">€</span>`;
         examTypeNameElem.innerText = exam_Type.name;
 
         // Init RowSpan
@@ -216,7 +219,7 @@ function mountTable() {
 
             examNameElem.innerText = exam.name;
             examCountElem.innerText = exam.count;
-            examTotalElem.innerText = `${exam.total}€`;
+            examTotalElem.innerHTML = `${exam.total}<span class="examEuro">€</span>`;
             examNameElem.rowSpan = exam.seguros.length;
             examCountElem.rowSpan = exam.seguros.length;
             examTotalElem.rowSpan = exam.seguros.length;
@@ -232,7 +235,7 @@ function mountTable() {
 
                 seguroNameElem.innerText = seguro.name;
                 seguroCountElem.innerHTML = seguro.count;
-                seguroTotalElem.innerText = seguro.total;
+                seguroTotalElem.innerText = `${seguro.total}€`;
 
                 // First row of this exam_Type
                 if (examTypeFirst) {
@@ -251,6 +254,7 @@ function mountTable() {
 
                 // First row of this exam
                 if (examFirst) {
+                    examFirst = false;
                     rowElem.replaceChildren(
                         examNameElem, examCountElem, examTotalElem,
                         seguroNameElem, seguroCountElem, seguroTotalElem
@@ -266,7 +270,7 @@ function mountTable() {
     });
 
     // Update Table
-    tbodyElem.replaceChildren(...rows);
+    tbodyElem.replaceChildren(...tableRows);
     totalElem.innerText = total;
     warningElem.style.display = 'none';
     tableElem.style.display = '';
@@ -287,7 +291,7 @@ function mountTable() {
     return;
 }
 
-function whatToAskNext(previous) {
+function whatToAskNext(previousMessage) {
     // Update
     updateSelection();
 
@@ -302,12 +306,13 @@ function whatToAskNext(previous) {
     for (let i = 0; i < extensionGlobalData.state.searchIntervals.length; i++) {
         const interval = extensionGlobalData.state.searchIntervals[i];
 
-        if (interval.records.length !== 0 && !interval.complete) {
+        if (interval.startDate === previousMessage.startDate && interval.endDate === previousMessage.endDate && previousMessage.nextBtn) {
             message['nextPage'] = true;
             return message;
         }
     }
 
+    // Search Missing Intervals
     for (let i = 0; i < extensionGlobalData.state.searchIntervals.length; i++) {
         const interval = extensionGlobalData.state.searchIntervals[i];
 
@@ -318,5 +323,9 @@ function whatToAskNext(previous) {
             return message;
         }
     }
+
+    // TODO Remove This!
+    message['nothing'] = true;
+    return message;
     // TODO Check if logic Works
 }

@@ -21,6 +21,9 @@ main {
     align-items: center;
     justify-content: center;
 }
+#btn-container div a {
+    cursor: pointer;
+}
 
 #btn-container div a img {
     height: 2.8em;
@@ -36,6 +39,7 @@ main {
     border-radius: 0.4em 0.4em 0 0;
     border-collapse: collapse;
     font-family: 'Roboto', sans-serif;
+    font-size: 0.8em;
 
     box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.15) ;
 }
@@ -55,17 +59,24 @@ main {
     text-align: center;
 }
 
+/* Add Vertical Border Lines */
 #content-table tbody td:not(:last-child):not(:first-child) {
     border-inline: 1px solid #dddddd;
 }
 
+/* Inverting BackGround Color */
 #content-table tbody tr:nth-of-type(even) td:nth-last-child(1),
 #content-table tbody tr:nth-of-type(even) td:nth-last-child(2),
 #content-table tbody tr:nth-of-type(even) td:nth-last-child(3) {
     background-color: var(--secondary-background-color);
 }
 
-#content-table tbody tr:has(span):not(:first-child) {
+/* Horizontal Soft line */
+#content-table tbody tr:has(span[class~="examEuro"]):not(:first-child) {
+    border-top: 2px solid #dadada;
+}
+/* Horizontal Dark line */
+#content-table tbody tr:has(span[class~="examTypeEuro"]):not(:first-child) {
     border-top: 2px solid #484848;
 }
 

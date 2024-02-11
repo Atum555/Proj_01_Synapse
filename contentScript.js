@@ -74,8 +74,6 @@ function handleResponse(response) {
     // STOP if Loading Next Page
     if (STOP) { return; }
 
-    console.log(response);
-
     if (response.request === 'search') {
         // Input Dates
         const startDateElem = document.getElementById('ctl00_MainContent_txtRptExamDate');

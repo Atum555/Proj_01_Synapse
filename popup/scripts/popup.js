@@ -50,15 +50,13 @@ function askData() {
         }
     });
 }
-setInterval(askData, 15000);
+setInterval(askData, 300);
 // TODO Reduce Interval
 
 
 // Receive data
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    console.log(message);
-
-    let next = whatToAskNext();
+    let next = whatToAskNext(message);
 
     // Nothing to Search
     if (next.nothing) { mountTable(); return; }
@@ -77,11 +75,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     // Update Records and Intervals Info
     extensionGlobalData.state.searchIntervals.forEach((interval) => {
-        if (interval.startDate === message.startDate && interval.endDate === message.endDate) {
+        if (interval.startDate === message.startDate && interval.endDate === message.endDate && !(interval.pages.includes(message.page))) {
+            interval.pages.push(message.page)
             interval.records.push(...message.records);
             interval.count += message.records.length;
 
-            if (interval.count === message.totalRecordCount) {
+            if (!message.nextBtn) {
                 interval.complete = true;
                 extensionGlobalData.records.push(...interval.records);
             }
@@ -89,7 +88,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
 
     // Update Next
-    next = whatToAskNext();
+    next = whatToAskNext(message);
 
     // Nothing to Search
     if (next.nothing) { mountTable(); return; }

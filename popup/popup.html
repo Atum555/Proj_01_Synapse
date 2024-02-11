@@ -37,6 +37,12 @@
 
                 font-family: 'Roboto', sans-serif;
             }
+
+            @media print {
+                body {
+                    zoom: 75%;
+                }
+            }
         </style>
         <link
             rel="stylesheet"
@@ -78,6 +84,7 @@
                     <a
                         id="pdf-btn"
                         title="Imprimir como PDF"
+                        tabindex="0"
                         ><img
                             src="images/pdf-icon.png"
                             alt=""
@@ -85,6 +92,7 @@
                     <a
                         id="excel-btn"
                         title="Baixar como Excel"
+                        tabindex="0"
                         ><img
                             src="images/excel-icon.png"
                             alt=""
@@ -92,6 +100,7 @@
                     <a
                         href="settings/settings.html"
                         title="Alterar Preços"
+                        tabindex="0"
                         ><img
                             src="images/settings-icon.png"
                             alt=""
@@ -101,12 +110,12 @@
             </div>
             <h2
                 id="content-warning"
-                style="color: red">
+                style="color: red;">
                 Loading...
             </h2>
             <table
                 id="content-table"
-                style="display: none">
+                style="display: none;">
                 <thead>
                     <tr>
                         <th>SubTotal</th>
@@ -114,11 +123,12 @@
                         <th>Exame</th>
                         <th>Nº</th>
                         <th>SubTotal</th>
+                        <th>Seguro</th>
                         <th>Nº</th>
                         <th>SubTotal</th>
                     </tr>
                 </thead>
-                <tbody id="table-body"></tbody>
+                    <tbody id="table-body"></tbody>
             </table>
         </main>
         <script src="scripts/generateNav.js"></script>

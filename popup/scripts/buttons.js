@@ -1,7 +1,7 @@
 // PDF Button Event Listener
 document.getElementById('pdf-btn').addEventListener('click', (event) => {
     event.preventDefault();
-    if (JSON.stringify(globalData) === JSON.stringify({})) { return; }
+    if (JSON.stringify(extensionGlobalData?.data) === JSON.stringify({})) { return; }
     let myWindow = window.open('', 'PRINT', 'height=400,width=600');
 
     myWindow.document.write('<html><head>');
@@ -15,13 +15,9 @@ document.getElementById('pdf-btn').addEventListener('click', (event) => {
 
     myWindow.document.close(); // necessary for IE >= 10
     myWindow.focus(); // necessary for IE >= 10*/
-    /*     myWindow.document.addEventListener('readystatechange', (event) => {
-            if (event.target.readyState === "complete") {
-                myWindow.print();
-                myWindow.close();
-            }
-        }); */
+    const nav = document.getElementById('date-selector');
     setTimeout(() => {
+        myWindow.document.getElementById('date-selector').scrollLeft = nav.scrollLeft;
         myWindow.print();
         myWindow.close();
     }, 500);
