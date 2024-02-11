@@ -19,6 +19,13 @@
 
         const yearNumber = String(date.getFullYear() - i);
         yearBtn.innerText = yearNumber;
+        yearBtn.addEventListener('click', (event) => {
+            Array(...document.getElementsByClassName("month-btn")).forEach((btn) => {
+                if (btn.id.split('-').includes(yearNumber)) {
+                    btn.classList.add("month-btn-ative")
+                }
+            });
+        });
         yearContainer.appendChild(yearBtn);
 
         // Generate Months Buttons

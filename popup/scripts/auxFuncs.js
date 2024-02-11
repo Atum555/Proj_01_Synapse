@@ -107,8 +107,6 @@ function calculateSearchIntervals() {
 }
 
 function mountTable() {
-    // TODO Check if table mount works
-
     const titleElem = document.querySelector('title');
     const totalElem = document.getElementById('table-total');
     const warningElem = document.getElementById('content-warning');
@@ -123,7 +121,7 @@ function mountTable() {
         const seguro = record.seguro;
 
         // Create exam_Type if non existent
-        if (!data.some((e) => e.name === exam_Type )) {
+        if (!data.some((e) => e.name === exam_Type)) {
             data.push({
                 'name': exam_Type,
                 'exams': [],
@@ -131,7 +129,7 @@ function mountTable() {
                 'total': 0
             });
         }
-        const d_Exam_Type = data.find((e) => e.name === exam_Type );
+        const d_Exam_Type = data.find((e) => e.name === exam_Type);
 
         // Exams
         record.exams.forEach((exam) => {
@@ -142,7 +140,7 @@ function mountTable() {
 
 
             // Create exam if non existent
-            if (!d_Exam_Type.exams.some((e) => e.name == exam )) {
+            if (!d_Exam_Type.exams.some((e) => e.name == exam)) {
                 d_Exam_Type.exams.push({
                     'name': exam,
                     'count': 0,
@@ -151,11 +149,11 @@ function mountTable() {
                     'seguros': []
                 });
             }
-            const d_Exam = d_Exam_Type.exams.find((e) => e.name === exam );
+            const d_Exam = d_Exam_Type.exams.find((e) => e.name === exam);
 
 
             // Create seguro if non existent
-            if (!d_Exam.seguros.some((e) =>  e.name === seguro )) {
+            if (!d_Exam.seguros.some((e) => e.name === seguro)) {
                 d_Exam.seguros.push({
                     'name': seguro,
                     'count': 0,
@@ -163,7 +161,7 @@ function mountTable() {
                     'total': 0
                 });
             }
-            const d_Seguro = d_Exam.seguros.find((e) => e.name === seguro );
+            const d_Seguro = d_Exam.seguros.find((e) => e.name === seguro);
 
             // Increase exam_Type count
             // Increase subTotalOuter

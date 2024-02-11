@@ -58,7 +58,6 @@ function sendData() {
 
     // Exams Total
     const footNote = document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length - 1].children[0].innerText.split(' ');
-    // TODO Parse foot note.    
     message['page'] = footNote[3];
     message['totalRecordCount'] = footNote[7];
 
@@ -93,8 +92,6 @@ function handleResponse(response) {
     }
     if (response.request === 'next-page') {
         document.getElementById('ctl00_MainContent_lkReportNext').click();
-        // TODO Check if this works
-        // If not send request to inPage Script
     }
 }
 

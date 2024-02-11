@@ -30,8 +30,6 @@ main {
     width: 2.8em;
 }
 
-/* TODO Fix Table Styles */
-
 #content-table {
     overflow: hidden;
     width: 100%;
@@ -83,7 +81,9 @@ main {
 #content-table tbody tr:has(span) td:nth-child(1),
 #content-table tbody tr:has(span) td:nth-child(2),
 #content-table tbody td:nth-last-child(1),
-#content-table tbody td:nth-last-child(2) {
+#content-table tbody td:nth-last-child(2),
+#content-table tbody td:nth-last-child(4),
+#content-table tbody td:nth-last-child(5) {
     padding-inline: 1.5em;
 }
 

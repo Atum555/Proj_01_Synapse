@@ -99,6 +99,7 @@ header img {
     font-weight: 500;
     color: white;
     background-color: var(--active-background-color);
+    cursor: pointer;
 
 
     border: none;
@@ -123,6 +124,7 @@ header img {
     font-size: 0.8em;
     font-weight: 500;
     color: var(--text-color);
+    cursor: pointer;
 
     border: none;
     border-radius: 0.3em;

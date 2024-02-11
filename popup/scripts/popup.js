@@ -51,7 +51,6 @@ function askData() {
     });
 }
 setInterval(askData, 300);
-// TODO Reduce Interval
 
 
 // Receive data
