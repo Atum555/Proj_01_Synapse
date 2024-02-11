@@ -9,7 +9,9 @@ function handleMessage(request) {
         sendData();
     }
 }
-chrome.runtime.onMessage.addListener(handleMessage);
+window.onload(function () {
+    chrome.runtime.onMessage.addListener(handleMessage);
+});
 
 
 // Send Messages
