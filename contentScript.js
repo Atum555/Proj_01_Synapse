@@ -1,7 +1,7 @@
 let STOP = false;
 
-// Handle Messages
-function handleMessage(request, sender, sendResponse) {
+// Handle Data Asked
+function handleMessage(request) {
     // STOP if Loading Next Page
     if (STOP) { return; }
 
@@ -17,15 +17,14 @@ function sendData() {
     // STOP if Loading Next Page
     if (STOP) { return; }
 
+    // Init Return Message
     const message = {};
 
-    // Date
-    const startDate = document.getElementById('ctl00_MainContent_txtRptExamDate')?.value;
-    const endDate = document.getElementById('ctl00_MainContent_txtRptExamEndDate')?.value;
-    message['startDate'] = startDate;
-    message['endDate'] = endDate;
+    // Read Start Date
+    message['startDate'] = document.getElementById('ctl00_MainContent_txtRptExamDate')?.value;
+    message['endDate'] = document.getElementById('ctl00_MainContent_txtRptExamEndDate')?.value;
 
-    // Data
+    // Records
     message['records'] = [];
     const rows = document.querySelector("#ctl00_MainContent_pnlReports")?.querySelector(".table-body-report")?.children[0].children[0].children[0].children;
 
@@ -56,7 +55,7 @@ function sendData() {
         message.records.push(dataPoint);
     }
 
-    // Exams Total
+    // Foot Note, Page Number, Exams Total
     const footNote = document.getElementById('ctl00_MainContent_tdReportsFooterPager').children[document.getElementById('ctl00_MainContent_tdReportsFooterPager').children.length - 1].children[0].innerText.split(' ');
     message['page'] = footNote[3];
     message['totalRecordCount'] = footNote[7];
@@ -68,7 +67,7 @@ function sendData() {
     chrome.runtime.sendMessage(message, handleResponse);
 }
 
-// Handle Response from Message
+// Handle Response Request
 function handleResponse(response) {
     // STOP if Loading Next Page
     if (STOP) { return; }

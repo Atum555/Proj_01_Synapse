@@ -9,11 +9,6 @@ let extensionGlobalData = {
     'data': []
 }
 
-// Update Selected Months
-setInterval(function () {
-    if (updateSelection()) { askData(); }
-}, 250);
-
 
 // Send Message Asking for Data
 function askData() {
@@ -25,7 +20,17 @@ function askData() {
         if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
             chrome.tabs.sendMessage(activeTab.id, request)
                 .catch((error) => {
-                    if (!extensionGlobalData.state.searching) {
+                    if (extensionGlobalData.state.searching) {
+                        // Set to Loading
+                        const totalElem = document.getElementById('table-total');
+                        const warningElem = document.getElementById('content-warning');
+                        const tableElem = document.getElementById('content-table');
+
+                        totalElem.innerText = '0000';
+                        tableElem.style.display = 'none';
+                        warningElem.innerText = 'Loading...';
+                        warningElem.style.display = '';
+                    } else {
                         // Handle Error
                         const totalElem = document.getElementById('table-total');
                         const warningElem = document.getElementById('content-warning');
@@ -74,7 +79,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     // Update Records and Intervals Info
     extensionGlobalData.state.searchIntervals.forEach((interval) => {
-        if (interval.startDate === message.startDate && interval.endDate === message.endDate && !(interval.pages.includes(message.page))) {
+        if (
+            interval.startDate === message.startDate &&
+            interval.endDate === message.endDate &&
+            !(interval.pages.includes(message.page))
+        ) {
             interval.pages.push(message.page)
             interval.records.push(...message.records);
             interval.count += message.records.length;

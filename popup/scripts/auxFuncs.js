@@ -22,11 +22,35 @@ function updateSelection() {
         }
     });
     // Compare with global
-    if (JSON.stringify(extensionGlobalData.selected) !== JSON.stringify(selected)) {
+    if (extensionGlobalData.selected.length === 0) {
+        // Clear Global Data
         extensionGlobalData.selected = selected;
-        extensionGlobalData.state.complete = false;
+        extensionGlobalData.state.complete = true;
+        extensionGlobalData.state.searching = false;
         extensionGlobalData.state.searchIntervals = [];
         extensionGlobalData.data = [];
+        extensionGlobalData.records = [];
+
+        // Set to Nothing Selected
+        const totalElem = document.getElementById('table-total');
+        const warningElem = document.getElementById('content-warning');
+        const tableElem = document.getElementById('content-table');
+
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'Nada Selecionado.';
+        warningElem.style.display = '';
+        return true;
+    }
+
+    if (JSON.stringify(extensionGlobalData.selected) !== JSON.stringify(selected)) {
+        // Clear Global Data
+        extensionGlobalData.selected = selected;
+        extensionGlobalData.state.complete = false;
+        extensionGlobalData.state.searching = false;
+        extensionGlobalData.state.searchIntervals = [];
+        extensionGlobalData.data = [];
+        extensionGlobalData.records = [];
         calculateSearchIntervals();
         return true;
     }
@@ -102,8 +126,6 @@ function calculateSearchIntervals() {
         selected.splice(selected.indexOf(yearObj), 1);
     }
     extensionGlobalData.state.searchIntervals = searchIntervals;
-    extensionGlobalData.records = [];
-    extensionGlobalData.data = [];
 }
 
 function mountTable() {
@@ -294,7 +316,7 @@ function whatToAskNext(previousMessage) {
     updateSelection();
 
     const message = {};
-    // Nothing
+    // Nothing Selected / Complete
     if (extensionGlobalData.state.complete || extensionGlobalData.state.searchIntervals.length === 0) {
         message['nothing'] = true;
         return message;
@@ -304,7 +326,11 @@ function whatToAskNext(previousMessage) {
     for (let i = 0; i < extensionGlobalData.state.searchIntervals.length; i++) {
         const interval = extensionGlobalData.state.searchIntervals[i];
 
-        if (interval.startDate === previousMessage.startDate && interval.endDate === previousMessage.endDate && previousMessage.nextBtn) {
+        if (
+            interval.startDate === previousMessage.startDate &&
+            interval.endDate === previousMessage.endDate &&
+            previousMessage.nextBtn
+        ) {
             message['nextPage'] = true;
             return message;
         }
@@ -321,9 +347,4 @@ function whatToAskNext(previousMessage) {
             return message;
         }
     }
-
-    // TODO Remove This!
-    message['nothing'] = true;
-    return message;
-    // TODO Check if logic Works
 }
