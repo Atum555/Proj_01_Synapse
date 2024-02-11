@@ -9,7 +9,7 @@ function handleMessage(request) {
         sendData();
     }
 }
-window.onload(function () {
+window.addEventListener('load', function () {
     chrome.runtime.onMessage.addListener(handleMessage);
 });
 
@@ -31,7 +31,10 @@ function sendData() {
     const rows = document.querySelector("#ctl00_MainContent_pnlReports")?.querySelector(".table-body-report")?.children[0].children[0].children[0].children;
 
     // Check if no data is present on the page
-    if (rows === undefined) {
+    if (
+        rows.length === 0 ||
+        rows[0]?.children[0]?.children[0]?.children[0]?.tagName === 'SPAN'
+    ) {
         message['error'] = 'no-data';
         chrome.runtime.sendMessage(message, handleResponse);
         return;

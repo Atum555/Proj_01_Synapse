@@ -31,22 +31,6 @@ function updateSelection() {
         extensionGlobalData.data = [];
         extensionGlobalData.records = [];
 
-        // Nothing Selected
-        if (extensionGlobalData.selected.length === 0) {
-            // Set as Complete
-            extensionGlobalData.state.complete = true;
-
-            // Set to Nothing Selected
-            const totalElem = document.getElementById('table-total');
-            const warningElem = document.getElementById('content-warning');
-            const tableElem = document.getElementById('content-table');
-
-            totalElem.innerText = '0000';
-            tableElem.style.display = 'none';
-            warningElem.innerText = 'Nada Selecionado.';
-            warningElem.style.display = '';
-            return true;
-        }
         calculateSearchIntervals();
         return true;
     }
@@ -195,6 +179,38 @@ function mountTable() {
             d_Seguro.total += value;
         });
     });
+
+
+    // Nothing Selected
+    if (extensionGlobalData.selected.length === 0) {
+        // Set as Complete
+        extensionGlobalData.state.complete = true;
+
+        // Set to Nothing Selected
+        const totalElem = document.getElementById('table-total');
+        const warningElem = document.getElementById('content-warning');
+        const tableElem = document.getElementById('content-table');
+
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'Nada Selecionado.';
+        warningElem.style.display = '';
+        return true;
+    }
+    
+    // No Data
+    if (data.length === 0) {
+        // Set Invalid Page
+        const totalElem = document.getElementById('table-total');
+        const warningElem = document.getElementById('content-warning');
+        const tableElem = document.getElementById('content-table');
+
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'Sem Registos na Data Selecionada.';
+        warningElem.style.display = '';
+        return;
+    }
 
     // Don't update DOM if data didn't change
     if (JSON.stringify(extensionGlobalData.data) === JSON.stringify(data)) { return; }

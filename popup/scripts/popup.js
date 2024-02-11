@@ -9,6 +9,10 @@ let extensionGlobalData = {
     'data': []
 }
 
+// Update Selection
+setInterval(function () {
+    updateSelection();
+}, 500);
 
 // Send Message Asking for Data
 function askData() {
@@ -67,6 +71,18 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     // No Data
     if (message.error === "no-data") {
+        let ret = false;
+        extensionGlobalData.state.searchIntervals.forEach((interval) => {
+            if (
+                interval.startDate === message.startDate &&
+                interval.endDate === message.endDate
+            ) {
+                interval.complete = true;
+                ret = true;
+            }
+        });
+        if (ret) { return; }
+
         // Mark as Searching
         extensionGlobalData.state.searching = true;
         sendResponse({
