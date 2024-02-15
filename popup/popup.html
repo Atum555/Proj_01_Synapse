@@ -68,7 +68,7 @@
             </div>
             <button
                 id="deselect-icon"
-                title="Limpar meses selecionados.">
+                title="Limpar meses selecionados">
                 <img
                     src="images/deselect-icon.png"
                     alt="" />
@@ -76,7 +76,7 @@
         </header>
         <main>
             <div id="btn-container">
-                <h1 title="Valor total conseguido no periodo selecionado.">
+                <h1 title="Valor total conseguido no periodo selecionado">
                     Total:
                     <span id="table-total">0000</span>€
                 </h1>
@@ -110,25 +110,25 @@
             </div>
             <h2
                 id="content-warning"
-                style="color: red;">
+                style="color: red">
                 Loading...
             </h2>
             <table
                 id="content-table"
-                style="display: none;">
+                style="display: none">
                 <thead>
                     <tr>
-                        <th>SubTotal</th>
-                        <th>Tipo</th>
-                        <th>Exame</th>
-                        <th>Nº</th>
-                        <th>SubTotal</th>
-                        <th>Seguro</th>
-                        <th>Nº</th>
-                        <th>SubTotal</th>
+                        <th title="Número e valor total de exames realizados por tipo">SubTotal</th>
+                        <th title="Tipo de exame">Tipo</th>
+                        <th title="Nome do exame">Exame</th>
+                        <th title="Quantidade de vezes que o exame foi realizado"">Nº</th>
+                        <th title="Valor total conseguido por exame">SubTotal</th>
+                        <th title="Seguro associado">Seguro</th>
+                        <th title="Número de exames para seguro associado">Nº</th>
+                        <th title="Valor conseguido por seguro por exame">SubTotal</th>
                     </tr>
                 </thead>
-                    <tbody id="table-body"></tbody>
+                <tbody id="table-body"></tbody>
             </table>
         </main>
         <script src="scripts/generateNav.js"></script>
