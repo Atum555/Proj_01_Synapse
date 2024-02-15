@@ -51,7 +51,7 @@ function getValues() {
     if (!user) { return; }
 
     chrome.storage.sync.get([user]).then((result) => {
-        const userValues = Array.isArray(result[user]) ? result[user] : [];
+        const userValues = result[user] ? result[user] : {};
         extensionGlobalData.values = userValues;
     });
 }
