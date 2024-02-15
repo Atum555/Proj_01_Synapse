@@ -6,8 +6,10 @@ let extensionGlobalData = {
 
 // Read Usar Name
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const activeTab = tabs[0];
+    
     //Set Invalid Page
-    if (!tabs[0].url.match('https://cwm.trofasaude.com/*')) {
+    if (!activeTab.url.match('https://cwm.trofasaude.com/*')) {
         const tableElem = document.getElementById('content-table');
         const warningElem = document.getElementById('content-warning');
 

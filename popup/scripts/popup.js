@@ -21,7 +21,7 @@ function askData() {
         const request = 'send-data';
 
         // Send If Valid Page
-        if (tabs[0].url.match('https://cwm.trofasaude.com/*')) {
+        if (activeTab.url.match('https://cwm.trofasaude.com/*')) {
             chrome.tabs.sendMessage(activeTab.id, request)
                 .catch((error) => {
                     if (extensionGlobalData.state.searching) {
