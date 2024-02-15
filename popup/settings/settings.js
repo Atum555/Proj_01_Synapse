@@ -5,29 +5,36 @@ let extensionGlobalData = {
 }
 
 // Read Usar Name
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0];
-    
-    //Set Invalid Page
-    if (!activeTab.url.match('https://cwm.trofasaude.com/*')) {
-        const tableElem = document.getElementById('content-table');
-        const warningElem = document.getElementById('content-warning');
+function getUser() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const activeTab = tabs[0];
 
-        tableElem.style.display = 'none';
-        warningElem.innerText = 'WebSite inválido.';
-        warningElem.style.display = '';
-    } else {
-        const request = 'send-data';
-        chrome.tabs.sendMessage(activeTab.id, request)
-            .catch((error) => {
-                // Handle Error
-                const tableElem = document.getElementById('content-table');
-                const warningElem = document.getElementById('content-warning');
+        //Set Invalid Page
+        if (!activeTab.url.match('https://cwm.trofasaude.com/*')) {
+            const tableElem = document.getElementById('content-table');
+            const warningElem = document.getElementById('content-warning');
 
-                tableElem.style.display = 'none';
-                warningElem.innerText = 'Erro...';
-                warningElem.style.display = '';
-            });
+            tableElem.style.display = 'none';
+            warningElem.innerText = 'WebSite inválido.';
+            warningElem.style.display = '';
+        } else {
+            const request = 'send-data';
+            chrome.tabs.sendMessage(activeTab.id, request)
+                .catch((error) => {
+                    // Handle Error
+                    const tableElem = document.getElementById('content-table');
+                    const warningElem = document.getElementById('content-warning');
+
+                    tableElem.style.display = 'none';
+                    warningElem.innerText = 'Erro...';
+                    warningElem.style.display = '';
+                });
+        }
+    });
+}
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (extensionGlobalData.user !== message['userName']) {
+        extensionGlobalData.user === message['userName'];
     }
 });
 
@@ -48,7 +55,10 @@ function getValues() {
     const user = extensionGlobalData.user;
 
     // Return if user not defined
-    if (!user) { return; }
+    if (!user) {
+        getUser();
+        return;
+    }
 
     chrome.storage.sync.get([user]).then((result) => {
         const userValues = result[user] ? result[user] : {};
