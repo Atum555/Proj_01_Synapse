@@ -9,7 +9,7 @@
         "storage"
     ],
     "action": {
-        "default_popup": "popup/popup.html"
+        "default_popup": "popup/settings/settings.html"
     },
     "icons": {
         "1024": "icons/logo-icon-1024.png",

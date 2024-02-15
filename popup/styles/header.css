@@ -14,6 +14,8 @@ header img {
     background-color: white;
     color: white;
     border: none;
+
+    cursor: pointer;
 }
 #deselect-icon img {
     width: 3em;
@@ -38,6 +40,7 @@ header img {
     
     color: white;
     background-color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
 
     transition: all 0.15s ease;
 }

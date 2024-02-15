@@ -168,6 +168,24 @@ function calculateSearchIntervals() {
 }
 
 function mountTable() {
+
+    // Nothing Selected
+    if (extensionGlobalData.selected.length === 0) {
+        // Set as Complete
+        extensionGlobalData.state.complete = true;
+
+        // Set to Nothing Selected
+        const totalElem = document.getElementById('table-total');
+        const warningElem = document.getElementById('content-warning');
+        const tableElem = document.getElementById('content-table');
+
+        totalElem.innerText = '0000';
+        tableElem.style.display = 'none';
+        warningElem.innerText = 'Nada Selecionado.';
+        warningElem.style.display = '';
+        return true;
+    }
+    
     const titleElem = document.querySelector('title');
     const totalElem = document.getElementById('table-total');
     const warningElem = document.getElementById('content-warning');
@@ -238,23 +256,6 @@ function mountTable() {
         });
     });
 
-
-    // Nothing Selected
-    if (extensionGlobalData.selected.length === 0) {
-        // Set as Complete
-        extensionGlobalData.state.complete = true;
-
-        // Set to Nothing Selected
-        const totalElem = document.getElementById('table-total');
-        const warningElem = document.getElementById('content-warning');
-        const tableElem = document.getElementById('content-table');
-
-        totalElem.innerText = '0000';
-        tableElem.style.display = 'none';
-        warningElem.innerText = 'Nada Selecionado.';
-        warningElem.style.display = '';
-        return true;
-    }
 
     // No Data
     if (data.length === 0) {

@@ -1,0 +1,122 @@
+header {
+    padding: 0.5em 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header img {
+    width: 4em;
+    height: 4em;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.header-btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+
+    color: var(--text-color);
+    background-color: var(--secondary-background-color);
+
+    height: 2em;
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.15em 0.8em;
+    cursor: pointer;
+
+    transition: 0.1s ease;
+}
+.header-btn:hover,
+.header-btn:focus-visible {
+    color: var(--text-hover-color);
+    background-color: var(--hover-background-color);
+
+    padding: 0.2em 1em;
+    border-radius: 0.4em;
+    transform: scale(1.1);
+}
+
+.seguros-btn-active,
+.seguros-btn-active:hover,
+.seguros-btn-active:focus-visible {
+    color: white !important;
+    background-color: var(--active-background-color) !important;
+}
+
+#go-back-icon {
+    background-color: white;
+    color: white;
+    border: none;
+}
+#go-back-icon img {
+    width: 4em;
+    height: 4em;
+}
+
+main {
+    min-width: 600px;
+    padding-inline: 2em;
+    padding-bottom: 2em;
+}
+
+#content-table {
+    overflow: hidden;
+    width: 100%;
+
+    border-radius: 0.4em 0.4em 0 0;
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+
+    box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.15);
+}
+
+#content-table th {
+    border-bottom: 1px black solid;
+    padding: 0.8em 0;
+
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    text-wrap: nowrap;
+
+    color: white;
+    background-color: var(--active-background-color);
+}
+
+#content-table td {
+    padding: 1em 1.5em;
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+/* Inverting BackGround Color */
+#content-table tbody tr:nth-of-type(even) {
+    background-color: var(--secondary-background-color);
+}
+
+/* Horizontal Soft line */
+#content-table tbody tr {
+    border-top: 1px solid #dadada;
+}
+
+/* Table Border Bottom */
+#content-table tbody tr:last-child {
+    border-bottom: 2px solid var(--active-background-color);
+}
+
+/* Edit Price Elements */
+span[contenteditable='plaintext-only'] {
+    border: none;
+    border-radius: 0.2em;
+    padding: 5px;
+}
+span[contenteditable='plaintext-only']:focus {
+    outline: 1px solid #dadada;
+}

@@ -5,15 +5,109 @@
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0" />
-        <title>Settings</title>
+        <title>Definições</title>
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+            :root {
+                --text-color: rgb(70, 121, 151);
+                --text-hover-color: rgb(234, 251, 255);
+
+                --secondary-background-color: rgb(223, 237, 255);
+
+                --active-background-color: rgb(0, 174, 255);
+                --hover-background-color: rgb(98, 204, 253);
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
+                color-adjust: exact !important; /* Firefox 48 – 96 */
+                print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
+
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            *::-webkit-scrollbar {
+                display: none;
+            }
+
             body {
-                width: 400px;
-                height: 400px;
+                margin: 0;
+                margin-top: 1em;
+
+                font-family: 'Roboto', sans-serif;
             }
         </style>
+        <link
+            rel="stylesheet"
+            href="settings.css" />
     </head>
     <body>
-        <a href="../popup.html">Voltar</a>
+        <header>
+            <img
+                src="../images/logo-icon.png"
+                alt="" />
+            <div>
+                <button
+                    id="seguros-btn"
+                    class="header-btn">
+                    Seguros
+                </button>
+                <button
+                    class="header-btn"
+                    id="import-btn">
+                    Importar
+                </button>
+                <button
+                    class="header-btn"
+                    id="export-btn">
+                    Exportar
+                </button>
+                <a
+                    href="../popup.html"
+                    id="go-back-icon"
+                    title="Voltar à Página Inicial">
+                    <img
+                        src="images/go-back-icon.png"
+                        alt="" />
+                </a>
+            </div>
+        </header>
+        <main>
+            <h2
+                id="content-warning"
+                style="color: red">
+                Loading...
+            </h2>
+            <table
+                id="content-table"
+                style="display: none">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr class="exam-type-row">
+                        <td class="exam-name">CT</td>
+                        <td class="exam-value"><span contenteditable="plaintext-only">45</span>€</td>
+                    </tr>
+                    <tr class="exam-row">
+                        <td class="exam-name">ANGIO TAC TRONCOS SUPRA-AORTICOS</td>
+                        <td class="exam-value"><span contenteditable="plaintext-only">35</span>€</td>
+                    </tr>
+                    <tr class="exam-row">
+                        <td class="exam-name">ANGIO TAC CRANIO - ENCEFALICA/CEREBRAL</td>
+                        <td class="exam-value"><span contenteditable="plaintext-only">35</span>€</td>
+                    </tr>
+                    <tr class="seguro-row">
+                        <td class="exam-name">MULTICARE - FIDELIDADE MUNDIAL</td>
+                        <td class="exam-value"><span contenteditable="plaintext-only">60</span>€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <script src="settings.js"></script>
     </body>
 </html>

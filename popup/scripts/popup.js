@@ -42,7 +42,7 @@ function askData() {
 
                         totalElem.innerText = '0000';
                         tableElem.style.display = 'none';
-                        warningElem.innerText = 'Erro.';
+                        warningElem.innerText = 'Erro...';
                         warningElem.style.display = '';
                     }
                 });
