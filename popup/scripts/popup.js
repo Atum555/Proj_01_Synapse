@@ -12,9 +12,7 @@ let extensionGlobalData = {
 }
 
 // Update Selection
-setInterval(function () {
-    updateSelection();
-}, 500);
+setInterval(updateSelection, 500);
 
 // Send Message Asking for Data
 function askData() {
