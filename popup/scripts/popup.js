@@ -100,7 +100,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             interval.endDate === message.endDate &&
             !(interval.pages.includes(message.page))
         ) {
-            if (interval.count === 0 && message.page !== 1) { return; }
+            if (interval.count === 0 && message.page !== "1") { return; }
             interval.records.push(...message.records);
             interval.count += message.records.length;
 
