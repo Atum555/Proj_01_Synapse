@@ -110,9 +110,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             }
         }
     });
-    // Update User Name
-    extensionGlobalData.user = message['userName'];
 
+    // Update User Name and Values
+    if (extensionGlobalData.user !== message['userName']) {
+        extensionGlobalData.user === message['userName'];
+        updateValues();
+    }
+    
     // Update Next
     next = whatToAskNext(message);
 

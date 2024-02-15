@@ -1,4 +1,63 @@
 // Auxiliary Functions
+function updateValues() {
+    const user = extensionGlobalData.user;
+
+    // Return if user not defined
+    if (!user) { return; }
+
+    chrome.storage.sync.get([user]).then((result) => {
+        const userValues = Array.isArray(result[user]) ? result[user] : [];
+        extensionGlobalData.values = userValues;
+    });
+}
+
+function getValue(exam_Type, exam, seguro = undefined) {
+    const values = extensionGlobalData.values;
+    exam_value =
+        values.hasOwnProperty(exam_Type) ?
+            values[exam_Type].hasOwnProperty(exam) ?
+                values[exam_Type][exam].default
+                : values[exam_Type].default
+            : 0;
+    // Return if asking for exam value
+    if (!seguro) { return exam_value }
+
+    // Return if asking for seguro value
+    seguro_value =
+        values.hasOwnProperty(exam_Type) ?
+            values[exam_Type].hasOwnProperty(exam) ?
+                values[exam_Type][exam].hasOwnProperty(seguro) ?
+                    values[exam_Type][exam][seguro].value
+                    : values[exam_Type][exam].default
+                : values[exam_Type].default
+            : 0;
+    setTimeout(createValue, 0, exam_Type, exam, seguro);
+    return seguro_value;
+}
+
+function createValue(exam_Type, exam, seguro) {
+    let change = false;
+    if (!extensionGlobalData.values.hasOwnProperty(exam_Type)) {
+        extensionGlobalData.values[exam_Type] = { "default": 0 };
+        change = true;
+    }
+    if (!extensionGlobalData.values[exam_Type].hasOwnProperty(exam)) {
+        extensionGlobalData.values[exam_Type][exam] = { "default": 0 };
+        change = true;
+    }
+    if (!extensionGlobalData.values[exam_Type][exam].hasOwnProperty(seguro)) {
+        extensionGlobalData.values[exam_Type][exam][seguro] = { "value": 0 };
+        change = true;
+    }
+    if (change) { updateStorage(); }
+}
+
+function updateStorage() {
+    const data = {};
+    data[extensionGlobalData.user] = extensionGlobalData.values;
+    chrome.storage.sync.set(data).catch(() => { return; });
+}
+
 function updateSelection() {
     const selected = [];
     Array(...document.getElementsByClassName('month-btn-active')).forEach((monthElem) => {
@@ -135,10 +194,9 @@ function mountTable() {
 
         // Exams
         record.exams.forEach((exam) => {
-            // TODO Insert Real Values Here
-            const defaultValue = 10;
-            const seguroValue = 0;
-            const value = seguroValue | defaultValue;
+            const defaultValue = getValue(exam_Type, exam);
+            const seguroValue = getValue(exam_Type, exam, seguro);
+            const value = seguroValue ? seguroValue : defaultValue;
 
 
             // Create exam if non existent
@@ -197,7 +255,7 @@ function mountTable() {
         warningElem.style.display = '';
         return true;
     }
-    
+
     // No Data
     if (data.length === 0) {
         // Set Invalid Page

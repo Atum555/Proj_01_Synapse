@@ -68,7 +68,6 @@ function sendData() {
     // Next Page Button
     message['nextBtn'] = document.getElementById('ctl00_MainContent_lkReportNext') ? true : false;
 
-
     // User Name
     message['userName'] = document.getElementById('ctl00_cntHeader_lbUserName').innerText;
 
