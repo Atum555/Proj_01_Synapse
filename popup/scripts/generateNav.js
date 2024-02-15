@@ -16,9 +16,10 @@
         // Generate Year Button
         const yearBtn = document.createElement("button");
         yearBtn.classList.add("year-btn");
-
+        
         const yearNumber = String(date.getFullYear() - i);
         yearBtn.innerText = yearNumber;
+        yearBtn.title = `Selecionar todos os meses de ${yearNumber}`;
         yearBtn.addEventListener('click', (event) => {
             Array(...document.getElementsByClassName("month-btn")).forEach((btn) => {
                 if (btn.id.split('-').includes(yearNumber)) {
