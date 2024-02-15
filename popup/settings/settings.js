@@ -34,7 +34,7 @@ function getUser() {
 }
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (extensionGlobalData.user !== message['userName']) {
-        extensionGlobalData.user === message['userName'];
+        extensionGlobalData.user = message['userName'];
     }
 });
 

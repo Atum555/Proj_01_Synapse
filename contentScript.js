@@ -2,6 +2,10 @@ let STOP = false;
 
 // Handle Data Asked
 function handleMessage(request) {
+    if (request === "settings-send-data") {
+        sendData();
+    }
+
     // STOP if Loading Next Page
     if (STOP) { return; }
 
