@@ -100,7 +100,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             interval.endDate === message.endDate &&
             !(interval.pages.includes(message.page))
         ) {
-            interval.pages.push(message.page)
+            if (interval.count === 0 && message.page !== 1) { return; }
             interval.records.push(...message.records);
             interval.count += message.records.length;
 
@@ -116,7 +116,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         extensionGlobalData.user === message['userName'];
         updateValues();
     }
-    
+
     // Update Next
     next = whatToAskNext(message);
 

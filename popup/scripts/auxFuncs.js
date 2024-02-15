@@ -410,7 +410,7 @@ function whatToAskNext(previousMessage) {
         if (
             interval.startDate === previousMessage.startDate &&
             interval.endDate === previousMessage.endDate &&
-            previousMessage.nextBtn
+            previousMessage.nextBtn && interval.count !== 0
         ) {
             message['nextPage'] = true;
             return message;
