@@ -6,7 +6,9 @@ let extensionGlobalData = {
         'searchIntervals': []
     },
     'records': [],
-    'data': []
+    'data': [],
+    'user': false,
+    'values': {}
 }
 
 // Update Selection
@@ -110,6 +112,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             }
         }
     });
+    // Update User Name
+    extensionGlobalData.user = message['userName'];
 
     // Update Next
     next = whatToAskNext(message);
