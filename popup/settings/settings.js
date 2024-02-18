@@ -18,7 +18,7 @@ function getUser() {
             warningElem.innerText = 'WebSite inválido.';
             warningElem.style.display = '';
         } else {
-            const request = 'send-data';
+            const request = 'settings-send-data';
             chrome.tabs.sendMessage(activeTab.id, request)
                 .catch((error) => {
                     // Handle Error
@@ -37,6 +37,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         extensionGlobalData.user = message['userName'];
     }
 });
+setTimeout(getUser, 250);
 
 // Seguros Btn EventListener
 document.getElementById('seguros-btn').addEventListener('click', (event) => {
@@ -48,7 +49,7 @@ document.getElementById('seguros-btn').addEventListener('click', (event) => {
 
 // Importar Btn EventListener
 // Exportar Btn EventListener
-// TODO Implement Import Export
+// TODO Implement Import / Export
 
 // Read Stored Data
 function getValues() {

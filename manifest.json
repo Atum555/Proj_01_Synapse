@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Exam examiner",
+    "name": "Extrato de Exames",
     "version": "1.0",
-    "description": "Descrição por fazer!",
+    "description": "Faz um extrato geral dos exames que realizaste.",
     "permissions": [
         "activeTab",
         "scripting",
