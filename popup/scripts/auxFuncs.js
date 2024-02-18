@@ -6,33 +6,47 @@ function updateValues() {
     if (!user) { return; }
 
     chrome.storage.sync.get([user]).then((result) => {
-        const userValues = Array.isArray(result[user]) ? result[user] : [];
+        const userValues = Object.keys(result[user]).length !== 0 ? result[user] : {};
         extensionGlobalData.values = userValues;
+        extensionGlobalData.valuesUpdated = true;
     });
 }
 
 function getValue(exam_Type, exam, seguro = undefined) {
     const values = extensionGlobalData.values;
-    exam_value =
-        values.hasOwnProperty(exam_Type) ?
-            values[exam_Type].hasOwnProperty(exam) ?
-                values[exam_Type][exam].default
-                : values[exam_Type].default
-            : 0;
-    // Return if asking for exam value
-    if (!seguro) { return exam_value }
 
-    // Return if asking for seguro value
-    seguro_value =
-        values.hasOwnProperty(exam_Type) ?
-            values[exam_Type].hasOwnProperty(exam) ?
-                values[exam_Type][exam].hasOwnProperty(seguro) ?
-                    values[exam_Type][exam][seguro].value
-                    : values[exam_Type][exam].default
-                : values[exam_Type].default
-            : 0;
+    let exam_value
+    
+    // If Exam Type Exists
+    if (values.hasOwnProperty(exam_Type)) {
+        // If Exam exists and has non zero value
+        if ( values[exam_Type].hasOwnProperty(exam) && values[exam_Type][exam].default !== 0 ) 
+        { exam_value = values[exam_Type][exam].default; }
+        // If Exam doesn't exist or doesn't have a value
+        else { exam_value = values[exam_Type].default; }
+    }
+    // If Exam Type Doesn't exist
+    else { exam_value = 0; }
+
+    // Return if asking for exam value
+    if (!seguro) { return exam_value; }
+
+    // Create if doesn't exist
     setTimeout(createValue, 0, exam_Type, exam, seguro);
-    return seguro_value;
+
+    // Return seguro if it exists
+    // If Exam Type Exists
+    if (values.hasOwnProperty(exam_Type)) {
+        // If Exam exists and has non zero value
+        if ( values[exam_Type].hasOwnProperty(exam) ) {
+            if (values[exam_Type][exam].hasOwnProperty(seguro) && values[exam_Type][exam][seguro].value !== 0) 
+            { return values[exam_Type][exam][seguro].value }
+        }
+        // If Exam doesn't exist or doesn't have a value
+        else { return values[exam_Type].default; }
+    }
+    // If Exam Type Doesn't exist
+    else { return 0; }
 }
 
 function createValue(exam_Type, exam, seguro) {
@@ -49,12 +63,12 @@ function createValue(exam_Type, exam, seguro) {
         extensionGlobalData.values[exam_Type][exam][seguro] = { "value": 0 };
         change = true;
     }
-    if (change) { updateStorage(); }
+    if (change && extensionGlobalData.valuesUpdated) { updateStorage(); }
 }
 
 function updateStorage() {
     const data = {};
-    data[extensionGlobalData.user] = extensionGlobalData.values;
+    data[extensionGlobalData.user] = JSON.parse(JSON.stringify(extensionGlobalData.values));
     chrome.storage.sync.set(data).catch(() => { return; });
 }
 
@@ -124,7 +138,7 @@ function calculateSearchIntervals() {
                         const index = subYearObject.months.indexOf(String(next[0]));
                         subYearObject.months.splice(index, 1);
                         range[1] = next;
-                        lookForward = true
+                        lookForward = true;
                         break;
                     }
                 }
@@ -141,7 +155,7 @@ function calculateSearchIntervals() {
                         const index = subYearObject.months.indexOf(String(next[0]));
                         subYearObject.months.splice(index, 1);
                         range[0] = next;
-                        lookBackward = true
+                        lookBackward = true;
                         break;
                     }
                 }
@@ -185,7 +199,7 @@ function mountTable() {
         warningElem.style.display = '';
         return true;
     }
-    
+
     const titleElem = document.querySelector('title');
     const totalElem = document.getElementById('table-total');
     const warningElem = document.getElementById('content-warning');
@@ -367,14 +381,14 @@ function mountTable() {
     tableElem.style.display = '';
 
     // Update Title
-    titleElem.innerText = "Extrato";
+    titleElem.innerText = 'Extrato';
     extensionGlobalData.selected.forEach((year) => {
         titleElem.innerText += ` - ${year.year}`;
 
         const months = JSON.parse(JSON.stringify(year.months) || {});
         months.sort((a, b) => a - b);
 
-        const numberToMonth = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        const numberToMonth = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
         months.forEach((month) => {
             titleElem.innerText += ` ${numberToMonth[month - 1]}`;
         });

@@ -61,8 +61,7 @@ header div {
 
 main {
     min-width: 600px;
-    padding-inline: 2em;
-    padding-bottom: 2em;
+    padding: 2em;
 }
 
 #content-table {

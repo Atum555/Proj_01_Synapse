@@ -8,6 +8,7 @@ let extensionGlobalData = {
     'records': [],
     'data': [],
     'user': false,
+    'valuesUpdated': false,
     'values': {}
 }
 
@@ -113,7 +114,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     // Update User Name and Values
     if (extensionGlobalData.user !== message['userName']) {
-        extensionGlobalData.user === message['userName'];
+        extensionGlobalData.user = message['userName'];
         updateValues();
     }
 
