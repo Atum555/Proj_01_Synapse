@@ -30,48 +30,36 @@ document.getElementById('excel-btn').addEventListener('click', (event) => {
     // Extract Data (create a worksheet object from the table)
     const ws = XLSX.utils.table_to_sheet(table);
 
-    // Loop through each cell and apply styles
-    for (const cellAddress in ws) {
-        if (!ws.hasOwnProperty(cellAddress)) continue;
 
-        const cell = ws[cellAddress];
+    // Get the number of columns in the worksheet
+    const numberOfColumns = ws['!ref'].split(':')[1].charCodeAt(0) - ws['!ref'].split(':')[0].charCodeAt(0) + 1;
 
-        // Extract row and column indices from the cell address
-        const { r: rowIndex, c: colIndex } = XLSX.utils.decode_cell(cellAddress);
+    // Initialize an array to store maximum column widths
+    const columnWidths = new Array(numberOfColumns).fill(0);
 
-        // Get corresponding HTML cell
-        const htmlCell = table.rows[rowIndex].cells[colIndex];
+    // Iterate through each row in the worksheet
+    ws.forEach(function (row) {
+        // Iterate through each cell in the row
+        row.forEach(function (cell, columnIndex) {
+            // Calculate the content length of the cell (you may need to adjust this based on your content)
+            const contentLength = cell && cell.w ? cell.w.length : 0;
 
-        // Copy background color
-        const bgColor = htmlCell.style.backgroundColor;
-        if (bgColor) {
-            cell.s = cell.s || {};
-            cell.s.fill = { fgColor: { rgb: bgColor.replace('#', '') } };
-        }
+            // Update the maximum width for the column if the content length is greater than the current maximum
+            if (columnWidths[columnIndex] < contentLength) {
+                columnWidths[columnIndex] = contentLength;
+            }
+        });
+    });
 
-        // Copy font color
-        const fontColor = htmlCell.style.color;
-        if (fontColor) {
-            cell.s = cell.s || {};
-            cell.s.font = { color: { rgb: fontColor.replace('#', '') } };
-        }
+    // Set the column widths based on the maximum content length
+    columnWidths.forEach(function (width, columnIndex) {
+        const excelWidth = (width + 2) * 256; // Adding extra width for padding
 
-        // Copy text alignment
-        const textAlign = htmlCell.style.textAlign;
-        if (textAlign) {
-            cell.s = cell.s || {};
-            cell.s.alignment = cell.s.alignment || {};
-            cell.s.alignment.horizontal = textAlign;
-        }
+        // Update the column width in the worksheet
+        ws['!cols'] = ws['!cols'] || [];
+        ws['!cols'][columnIndex] = { width: excelWidth };
+    });
 
-        // Copy vertical alignment
-        const verticalAlign = htmlCell.style.verticalAlign;
-        if (verticalAlign) {
-            cell.s = cell.s || {};
-            cell.s.alignment = cell.s.alignment || {};
-            cell.s.alignment.vertical = verticalAlign;
-        }
-    }
 
     // Add Total
     XLSX.utils.sheet_add_aoa(ws, [["Total:", `${document.getElementById('table-total').innerText}€`]], { origin: -1 });
