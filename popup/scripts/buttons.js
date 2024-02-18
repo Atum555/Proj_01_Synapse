@@ -25,10 +25,50 @@ document.getElementById('pdf-btn').addEventListener('click', (event) => {
 
 // Excel Button Event Listener
 document.getElementById('excel-btn').addEventListener('click', (event) => {
-    const table_elt = document.getElementById("content-table");
+    const table = document.getElementById("content-table");
 
     // Extract Data (create a worksheet object from the table)
-    const ws = XLSX.utils.table_to_sheet(table_elt);
+    const ws = XLSX.utils.table_to_sheet(table);
+
+    // Loop through each cell and apply styles
+    for (const cellAddress in ws) {
+        if (!ws.hasOwnProperty(cellAddress)) continue;
+
+        const cell = ws[cellAddress];
+
+        // Get corresponding HTML cell
+        const htmlCell = table.rows[cellAddress.row].cells[cellAddress.col];
+
+        // Copy background color
+        const bgColor = htmlCell.style.backgroundColor;
+        if (bgColor) {
+            cell.s = cell.s || {};
+            cell.s.fill = { fgColor: { rgb: bgColor.replace('#', '') } };
+        }
+
+        // Copy font color
+        const fontColor = htmlCell.style.color;
+        if (fontColor) {
+            cell.s = cell.s || {};
+            cell.s.font = { color: { rgb: fontColor.replace('#', '') } };
+        }
+
+        // Copy text alignment
+        const textAlign = htmlCell.style.textAlign;
+        if (textAlign) {
+            cell.s = cell.s || {};
+            cell.s.alignment = cell.s.alignment || {};
+            cell.s.alignment.horizontal = textAlign;
+        }
+
+        // Copy vertical alignment
+        const verticalAlign = htmlCell.style.verticalAlign;
+        if (verticalAlign) {
+            cell.s = cell.s || {};
+            cell.s.alignment = cell.s.alignment || {};
+            cell.s.alignment.vertical = verticalAlign;
+        }
+    }
 
     // Add Total
     XLSX.utils.sheet_add_aoa(ws, [["Total:", `${document.getElementById('table-total').innerText}€`]], { origin: -1 });
