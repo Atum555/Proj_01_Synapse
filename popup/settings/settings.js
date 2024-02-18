@@ -108,7 +108,7 @@ function mountTable() {
             window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
             // Update Stored Value
-            values[exam_Type].default = Number(filteredText.replace(",","."));
+            values[exam_Type].default = Number(filteredText.replace(",", "."));
             setTimeout(updateStorage, 0);
         });
 
@@ -136,13 +136,13 @@ function mountTable() {
                 window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                 // Update Stored Value
-                values[exam_Type][exam].default = Number(filteredText.replace(",","."));
+                values[exam_Type][exam].default = Number(filteredText.replace(",", "."));
                 setTimeout(updateStorage, 0);
             });
 
             if (extensionGlobalData.seguros) {
                 for (const seguro in values[exam_Type][exam]) {
-                    if (seguro === "default") {continue;}
+                    if (seguro === "default") { continue; }
                     const seguroRowElem = document.createElement('tr');
                     const seguroNameElem = document.createElement('td');
                     const seguroValueElem = document.createElement('td');
@@ -165,7 +165,7 @@ function mountTable() {
                         window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                         // Update Stored Value
-                        values[exam_Type][exam][seguro].value = Number(filteredText.replace(",","."));
+                        values[exam_Type][exam][seguro].value = Number(filteredText.replace(",", "."));
                         setTimeout(updateStorage, 0);
                     });
                 }

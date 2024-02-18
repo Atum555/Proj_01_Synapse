@@ -37,7 +37,7 @@ header img {
 
     border: none;
     border-radius: 0.5em;
-    
+
     color: white;
     background-color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
@@ -78,7 +78,7 @@ header img {
 #date-selector {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-   
+
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -104,12 +104,10 @@ header img {
     background-color: var(--active-background-color);
     cursor: pointer;
 
-
     border: none;
     border-radius: 0.4em 0.4em 0 0;
     padding: 0.4em 1em 0.1em;
 }
-
 
 .month-container {
     width: 100%;

@@ -16,12 +16,13 @@ function getValue(exam_Type, exam, seguro = undefined) {
     const values = extensionGlobalData.values;
 
     let exam_value
-    
+
     // If Exam Type Exists
     if (values.hasOwnProperty(exam_Type)) {
         // If Exam exists and has non zero value
-        if ( values[exam_Type].hasOwnProperty(exam) && values[exam_Type][exam].default !== 0 ) 
-        { exam_value = values[exam_Type][exam].default; }
+        if (values[exam_Type].hasOwnProperty(exam) && values[exam_Type][exam].default !== 0) {
+            exam_value = values[exam_Type][exam].default;
+        }
         // If Exam doesn't exist or doesn't have a value
         else { exam_value = values[exam_Type].default; }
     }
@@ -38,9 +39,10 @@ function getValue(exam_Type, exam, seguro = undefined) {
     // If Exam Type Exists
     if (values.hasOwnProperty(exam_Type)) {
         // If Exam exists and has non zero value
-        if ( values[exam_Type].hasOwnProperty(exam) ) {
-            if (values[exam_Type][exam].hasOwnProperty(seguro) && values[exam_Type][exam][seguro].value !== 0) 
-            { return values[exam_Type][exam][seguro].value }
+        if (values[exam_Type].hasOwnProperty(exam)) {
+            if (values[exam_Type][exam].hasOwnProperty(seguro) && values[exam_Type][exam][seguro].value !== 0) {
+                return values[exam_Type][exam][seguro].value
+            }
         }
         // If Exam doesn't exist or doesn't have a value
         else { return values[exam_Type].default; }
