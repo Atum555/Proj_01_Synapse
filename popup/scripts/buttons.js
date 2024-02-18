@@ -36,8 +36,11 @@ document.getElementById('excel-btn').addEventListener('click', (event) => {
 
         const cell = ws[cellAddress];
 
+        // Extract row and column indices from the cell address
+        const { r: rowIndex, c: colIndex } = XLSX.utils.decode_cell(cellAddress);
+
         // Get corresponding HTML cell
-        const htmlCell = table.rows[cellAddress.row].cells[cellAddress.col];
+        const htmlCell = table.rows[rowIndex].cells[colIndex];
 
         // Copy background color
         const bgColor = htmlCell.style.backgroundColor;
