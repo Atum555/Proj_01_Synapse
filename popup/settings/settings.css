@@ -30,7 +30,7 @@ header div {
     padding: 0.15em 0.8em;
     cursor: pointer;
 
-    transition: 0.1s ease;
+    transition: all 0.1s ease;
 }
 .header-btn:hover,
 .header-btn:focus-visible {
@@ -47,6 +47,27 @@ header div {
 .seguros-btn-active:focus-visible {
     color: white !important;
     background-color: var(--active-background-color) !important;
+}
+
+@keyframes input-error {
+    10% {
+        color: white;
+        background-color: #ff7070;
+    }   
+    90% {
+        color: white;
+        background-color: #ff7070;
+    }
+}
+@keyframes input-success {
+    10% {
+        color: white;
+        background-color: #60ca80;
+    }
+    90% {
+        color: white;
+        background-color: #60ca80;
+    }
 }
 
 #go-back-icon {

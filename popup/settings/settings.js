@@ -48,9 +48,41 @@ document.getElementById('seguros-btn').addEventListener('click', (event) => {
     setTimeout(mountTable, 200);
 });
 
-
-// TODO Implement Import
 // Importar Btn EventListener
+document.getElementById('import-btn').addEventListener('click', (event) => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                if (reader.readyState === FileReader.DONE) {
+                    const jsonData = event.target.result;
+
+                    try {
+                        const parsedData = JSON.parse(jsonData);
+                        importSettings(parsedData.values);                     
+                    } 
+                    catch (error) { document.getElementById('import-btn').style.animation = 'input-error ease 3s'; }
+                }
+            }
+
+            reader.readAsText(file);
+        } 
+        else { document.getElementById('import-btn').style.animation = 'input-error ease 3s'; }
+        document.body.removeChild(fileInput);
+    });
+
+    document.body.appendChild(fileInput);
+    fileInput.click();
+});
+
 // Exportar Btn EventListener
 document.getElementById('export-btn').addEventListener('click', (event) => {
     const a = document.createElement('a');
@@ -65,6 +97,13 @@ document.getElementById('export-btn').addEventListener('click', (event) => {
     a.download = fileName;
     a.click();
     window.URL.revokeObjectURL(url);
+});
+
+// Delete Btn EventListener
+document.getElementById('delete-btn').addEventListener('click', (event) => {
+    extensionGlobalData.values = {};
+    setTimeout(updateStorage, 0);
+    setTimeout(mountTable, 100, true);
 });
 
 // Read Stored Data
@@ -88,10 +127,50 @@ function updateStorage() {
     chrome.storage.sync.set(data).catch(() => { return; });
 }
 
+// TODO Import Config Function
+// Import Config
+function importSettings(settings) {
+    console.log('import settings:');
+    console.log(settings);
+
+    // Loop ExamTypes
+    for (examType in settings) {
+        extensionGlobalData.values[examType] = extensionGlobalData.values[examType] || {};
+        
+        // Set value if new or undefined
+        if (settings[examType].default || !extensionGlobalData.values[examType].default ) 
+        {extensionGlobalData.values[examType].default = settings[examType].default;}
+
+        // Loop Exams
+        for (exam in settings[examType]) {
+            if (exam === 'default') { continue; }
+            extensionGlobalData.values[examType][exam] = extensionGlobalData.values[examType][exam] || {};
+
+            // Set value if new or undefined
+            if (settings[examType][exam].default || !extensionGlobalData.values[examType][exam].default) 
+            { extensionGlobalData.values[examType][exam].default = settings[examType][exam].default; }
+
+            // Loop Seguros
+            for (seguro in settings[examType][exam]) {
+                if (seguro === 'default') { continue; }
+                extensionGlobalData.values[examType][exam][seguro] = extensionGlobalData.values[examType][exam][seguro] || {};
+
+                // Set value if new or undefined
+                if (settings[examType][exam][seguro].value || !extensionGlobalData.values[examType][exam][seguro].value) {
+                    extensionGlobalData.values[examType][exam][seguro].value = settings[examType][exam][seguro].value;
+                }
+            }
+        }
+    }
+
+    document.getElementById('import-btn').style.animation = 'input-success 4s ease';
+    setTimeout(mountTable, 150);
+}
+
 // Mount Table
-function mountTable() {
+function mountTable(overWrite = false) {
     // Load Data if no Data is Present
-    if (Object.keys(extensionGlobalData.values).length === 0) { getValues(); return; }
+    if (!overWrite && Object.keys(extensionGlobalData.values).length === 0) { getValues(); return; }
 
     const warningElem = document.getElementById('content-warning');
     const tableElem = document.getElementById('content-table');
