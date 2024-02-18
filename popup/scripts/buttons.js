@@ -30,36 +30,48 @@ document.getElementById('excel-btn').addEventListener('click', (event) => {
     // Extract Data (create a worksheet object from the table)
     const ws = XLSX.utils.table_to_sheet(table);
 
-
-    // Get the number of columns in the worksheet
-    const numberOfColumns = ws['!ref'].split(':')[1].charCodeAt(0) - ws['!ref'].split(':')[0].charCodeAt(0) + 1;
+    // !!!!
+    // Get the range of cells in the worksheet
+    var range = XLSX.utils.decode_range(ws['!ref']);
+    var columnCount = range.e.c - range.s.c + 1;
 
     // Initialize an array to store maximum column widths
-    const columnWidths = new Array(numberOfColumns).fill(0);
+    var columnWidths = new Array(columnCount).fill(0);
 
-    // Iterate through each row in the worksheet
-    ws.forEach(function (row) {
-        // Iterate through each cell in the row
-        row.forEach(function (cell, columnIndex) {
+    // Iterate through each cell in the range
+    for (var R = range.s.r; R <= range.e.r; ++R) {
+        for (var C = range.s.c; C <= range.e.c; ++C) {
+            // Get the address of the current cell
+            var cellAddress = { c: C, r: R };
+
+            // Convert the cell address to A1 notation
+            var cellRef = XLSX.utils.encode_cell(cellAddress);
+
+            // Get the value of the cell
+            var cell = ws[cellRef];
+
             // Calculate the content length of the cell (you may need to adjust this based on your content)
-            const contentLength = cell && cell.w ? cell.w.length : 0;
+            var contentLength = cell && cell.w ? cell.w.length : 0;
 
             // Update the maximum width for the column if the content length is greater than the current maximum
-            if (columnWidths[columnIndex] < contentLength) {
-                columnWidths[columnIndex] = contentLength;
+            if (columnWidths[C] < contentLength) {
+                columnWidths[C] = contentLength;
             }
-        });
-    });
+        }
+    }
 
     // Set the column widths based on the maximum content length
     columnWidths.forEach(function (width, columnIndex) {
-        const excelWidth = (width + 2) * 256; // Adding extra width for padding
+        // Excel's column width unit is 1/256th of the width of the zero character, so you may need to adjust your widths accordingly
+        var excelWidth = (width + 2) * 256; // Adding extra width for padding
 
         // Update the column width in the worksheet
         ws['!cols'] = ws['!cols'] || [];
         ws['!cols'][columnIndex] = { width: excelWidth };
     });
 
+
+    // !!!!
 
     // Add Total
     XLSX.utils.sheet_add_aoa(ws, [["Total:", `${document.getElementById('table-total').innerText}€`]], { origin: -1 });
