@@ -49,9 +49,23 @@ document.getElementById('seguros-btn').addEventListener('click', (event) => {
 });
 
 
+// TODO Implement Import
 // Importar Btn EventListener
 // Exportar Btn EventListener
-// TODO Implement Import / Export
+document.getElementById('export-btn').addEventListener('click', (event) => {
+    const a = document.createElement('a');
+
+    const fileName = `Definições - ${extensionGlobalData.user}.json`;
+    const data = {'values': extensionGlobalData.values};
+    const json = JSON.stringify(data);
+    const blob = new Blob([json], {'type': 'octet/stream'});
+    const url = window.URL.createObjectURL(blob);
+
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+});
 
 // Read Stored Data
 function getValues() {
@@ -126,6 +140,7 @@ function mountTable() {
             examRowElem.classList.add('exam-row');
             examNameElem.classList.add('exam-name');
             examValueElem.classList.add('exam-value');
+            if (values[exam_Type][exam].default == 0) {examValueElem.classList.add('empty-value');}
             examSpanElem.innerText = `${values[exam_Type][exam].default}`;
             examSpanElem.contentEditable = 'plaintext-only';
             examSpanElem.addEventListener('input', (event) => {
@@ -133,6 +148,8 @@ function mountTable() {
                 const text = event.target.innerText;
                 const filteredText = text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g) ? text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g)[0] : '0';
                 event.target.innerText = filteredText;
+                if (filteredText === '0') {event.target.parentElement.classList.add('empty-value');}
+                else {event.target.parentElement.classList.remove('empty-value');}
                 window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                 // Update Stored Value
@@ -152,9 +169,10 @@ function mountTable() {
                     seguroRowElem.replaceChildren(seguroNameElem, seguroValueElem);
                     seguroValueElem.replaceChildren(seguroSpanElem, document.createTextNode("€"));
                     seguroNameElem.innerText = seguro;
-                    seguroRowElem.classList.add('exam-row');
+                    seguroRowElem.classList.add('seguro-row');
                     seguroNameElem.classList.add('exam-name');
                     seguroValueElem.classList.add('exam-value');
+                    if (values[exam_Type][exam][seguro].value == 0) {seguroValueElem.classList.add('empty-value');}
                     seguroSpanElem.innerText = `${values[exam_Type][exam][seguro].value}`;
                     seguroSpanElem.contentEditable = 'plaintext-only';
                     seguroSpanElem.addEventListener('input', (event) => {
@@ -162,6 +180,8 @@ function mountTable() {
                         const text = event.target.innerText;
                         const filteredText = text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g) ? text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g)[0] : '0';
                         event.target.innerText = filteredText;
+                        if (filteredText === '0') {event.target.parentElement.classList.add('empty-value');}
+                        else {event.target.parentElement.classList.remove('empty-value');}
                         window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                         // Update Stored Value
