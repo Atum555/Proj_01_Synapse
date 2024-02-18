@@ -25,18 +25,18 @@ document.getElementById('pdf-btn').addEventListener('click', (event) => {
 
 // Excel Button Event Listener
 document.getElementById('excel-btn').addEventListener('click', (event) => {
-    // TODO Add Excel Button Functionality
-
-    // Acquire Data (reference to the HTML table)
     const table_elt = document.getElementById("content-table");
 
-    // Extract Data (create a workbook object from the table)
-    var workbook = XLSX.utils.table_to_book(table_elt);
+    // Extract Data (create a worksheet object from the table)
+    const ws = XLSX.utils.table_to_sheet(table_elt);
 
-    // Process Data (add a new row)
-    var ws = workbook.Sheets["Sheet1"];
-    XLSX.utils.sheet_add_aoa(ws, [["Created " + new Date().toISOString()]], { origin: -1 });
+    // Add Total
+    XLSX.utils.sheet_add_aoa(ws, [["Total:", `${document.getElementById('table-total').innerText}€`]], { origin: -1 });
 
-    // Package and Release Data (`writeFile` tries to write and save an XLSB file)
-    XLSX.writeFile(workbook, "Report.xlsb");
+    const wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Folha1');
+
+    // Package and Release Data
+    XLSX.writeFile(wb, "Report.xlsx");
 });
