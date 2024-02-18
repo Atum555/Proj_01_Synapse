@@ -53,7 +53,7 @@ header div {
     10% {
         color: white;
         background-color: #ff7070;
-    }   
+    }
     90% {
         color: white;
         background-color: #ff7070;
@@ -155,7 +155,7 @@ span[contenteditable='plaintext-only']:focus {
 .exam-row {
     background-color: var(--secondary-background-color);
 }
-.exam-row  .empty-value {
+.exam-row .empty-value {
     font-weight: 200;
     color: #9a9a9a;
 }
@@ -164,7 +164,7 @@ span[contenteditable='plaintext-only']:focus {
     background-color: white;
     font-size: 0.75em;
 }
-.seguro-row  .empty-value {
+.seguro-row .empty-value {
     font-weight: 100;
     color: #bababa;
 }

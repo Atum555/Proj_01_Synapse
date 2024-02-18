@@ -67,14 +67,14 @@ document.getElementById('import-btn').addEventListener('click', (event) => {
 
                     try {
                         const parsedData = JSON.parse(jsonData);
-                        importSettings(parsedData.values);                     
-                    } 
+                        importSettings(parsedData.values);
+                    }
                     catch (error) { document.getElementById('import-btn').style.animation = 'input-error ease 3s'; }
                 }
             }
 
             reader.readAsText(file);
-        } 
+        }
         else { document.getElementById('import-btn').style.animation = 'input-error ease 3s'; }
         document.body.removeChild(fileInput);
     });
@@ -88,9 +88,9 @@ document.getElementById('export-btn').addEventListener('click', (event) => {
     const a = document.createElement('a');
 
     const fileName = `Definições - ${extensionGlobalData.user}.json`;
-    const data = {'values': extensionGlobalData.values};
+    const data = { 'values': extensionGlobalData.values };
     const json = JSON.stringify(data);
-    const blob = new Blob([json], {'type': 'octet/stream'});
+    const blob = new Blob([json], { 'type': 'octet/stream' });
     const url = window.URL.createObjectURL(blob);
 
     a.href = url;
@@ -127,7 +127,7 @@ function updateStorage() {
     chrome.storage.sync.set(data).catch(() => { return; });
 }
 
-// TODO Import Config Function
+
 // Import Config
 function importSettings(settings) {
     console.log('import settings:');
@@ -136,10 +136,9 @@ function importSettings(settings) {
     // Loop ExamTypes
     for (examType in settings) {
         extensionGlobalData.values[examType] = extensionGlobalData.values[examType] || {};
-        
+
         // Set value if new or undefined
-        if (settings[examType].default || !extensionGlobalData.values[examType].default ) 
-        {extensionGlobalData.values[examType].default = settings[examType].default;}
+        if (settings[examType].default || !extensionGlobalData.values[examType].default) { extensionGlobalData.values[examType].default = settings[examType].default; }
 
         // Loop Exams
         for (exam in settings[examType]) {
@@ -147,8 +146,7 @@ function importSettings(settings) {
             extensionGlobalData.values[examType][exam] = extensionGlobalData.values[examType][exam] || {};
 
             // Set value if new or undefined
-            if (settings[examType][exam].default || !extensionGlobalData.values[examType][exam].default) 
-            { extensionGlobalData.values[examType][exam].default = settings[examType][exam].default; }
+            if (settings[examType][exam].default || !extensionGlobalData.values[examType][exam].default) { extensionGlobalData.values[examType][exam].default = settings[examType][exam].default; }
 
             // Loop Seguros
             for (seguro in settings[examType][exam]) {
@@ -219,7 +217,7 @@ function mountTable(overWrite = false) {
             examRowElem.classList.add('exam-row');
             examNameElem.classList.add('exam-name');
             examValueElem.classList.add('exam-value');
-            if (values[exam_Type][exam].default == 0) {examValueElem.classList.add('empty-value');}
+            if (values[exam_Type][exam].default == 0) { examValueElem.classList.add('empty-value'); }
             examSpanElem.innerText = `${values[exam_Type][exam].default}`;
             examSpanElem.contentEditable = 'plaintext-only';
             examSpanElem.addEventListener('input', (event) => {
@@ -227,8 +225,8 @@ function mountTable(overWrite = false) {
                 const text = event.target.innerText;
                 const filteredText = text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g) ? text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g)[0] : '0';
                 event.target.innerText = filteredText;
-                if (filteredText === '0') {event.target.parentElement.classList.add('empty-value');}
-                else {event.target.parentElement.classList.remove('empty-value');}
+                if (filteredText === '0') { event.target.parentElement.classList.add('empty-value'); }
+                else { event.target.parentElement.classList.remove('empty-value'); }
                 window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                 // Update Stored Value
@@ -251,7 +249,7 @@ function mountTable(overWrite = false) {
                     seguroRowElem.classList.add('seguro-row');
                     seguroNameElem.classList.add('exam-name');
                     seguroValueElem.classList.add('exam-value');
-                    if (values[exam_Type][exam][seguro].value == 0) {seguroValueElem.classList.add('empty-value');}
+                    if (values[exam_Type][exam][seguro].value == 0) { seguroValueElem.classList.add('empty-value'); }
                     seguroSpanElem.innerText = `${values[exam_Type][exam][seguro].value}`;
                     seguroSpanElem.contentEditable = 'plaintext-only';
                     seguroSpanElem.addEventListener('input', (event) => {
@@ -259,8 +257,8 @@ function mountTable(overWrite = false) {
                         const text = event.target.innerText;
                         const filteredText = text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g) ? text.match(/[1-9][0-9]*(,)?([0-9]*[1-9])?/g)[0] : '0';
                         event.target.innerText = filteredText;
-                        if (filteredText === '0') {event.target.parentElement.classList.add('empty-value');}
-                        else {event.target.parentElement.classList.remove('empty-value');}
+                        if (filteredText === '0') { event.target.parentElement.classList.add('empty-value'); }
+                        else { event.target.parentElement.classList.remove('empty-value'); }
                         window.getSelection().collapse(event.target.firstChild, filteredText.length);
 
                         // Update Stored Value
