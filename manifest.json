@@ -5,7 +5,6 @@
     "description": "Faz um extrato geral dos exames que realizaste.",
     "permissions": [
         "activeTab",
-        "scripting",
         "storage"
     ],
     "action": {
